@@ -1,0 +1,1 @@
+<p class="text-center w-full text-2xl">{{ __('nova.' . env('APP_NAME')) }}</p>
