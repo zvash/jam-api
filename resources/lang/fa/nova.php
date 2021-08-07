@@ -47,4 +47,9 @@ return [
     'reject_order' => 'رد سفارش',
     'reject' => 'رد',
     'reject_order_confirmation' => 'این سفارش را رد می کنید؟',
+    'promoted_to_admin' => 'نقش کاربر به ادمین ارتقا یافت.',
+    'something_went_wrong' => 'بروز خطا هنگام انجام عملیات.',
+    'promote_user' => 'ارتقا به ادمین',
+    'promote_user_confirm_text' => 'نقش کاربر را به ادمین ارتقا می دهید؟',
+    'yes' => 'بله',
 ];

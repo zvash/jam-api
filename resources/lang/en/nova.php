@@ -47,4 +47,9 @@ return [
     'reject' => 'Reject',
     'reject_order' => 'Reject Order',
     'reject_order_confirmation' => 'Are you sure you want to reject this order?',
+    'promoted_to_admin' => 'User is promoted to Admin.',
+    'something_went_wrong' => 'Something went wrong.',
+    'promote_user' => 'Promote to Admin',
+    'promote_user_confirm_text' => 'Are you sure you want to promote this user to be an admin?',
+    'yes' => 'Yes',
 ];

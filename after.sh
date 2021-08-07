@@ -6,6 +6,7 @@ sudo composer install -n && sudo composer dump-autoload -n
 sudo chmod -R 0777 storage bootstrap/cache
 #sudo php artisan storage:link
 sudo chown admin:admin /sites/MilanJam/milan-jam-api -R
+sudo php artisan optimize:clear
 sudo php artisan cache:clear
 sudo php artisan view:clear
 sudo php artisan route:cache

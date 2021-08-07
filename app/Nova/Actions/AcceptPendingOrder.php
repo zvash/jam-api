@@ -16,6 +16,9 @@ class AcceptPendingOrder extends Action
 {
     use InteractsWithQueue, Queueable;
 
+    /**
+     * @return array|null|string
+     */
     public function name()
     {
         return __('nova.accept_pending_order');

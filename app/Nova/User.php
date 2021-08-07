@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PromoteToAdmin;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
@@ -174,6 +175,12 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            PromoteToAdmin::make()
+                ->confirmButtonText(__('nova.yes'))
+                ->cancelButtonText(__('nova.cancel'))
+                ->confirmText(__('nova.promote_user_confirm_text'))
+                ->showOnTableRow()
+        ];
     }
 }
