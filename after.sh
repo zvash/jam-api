@@ -14,3 +14,4 @@ sudo php artisan event:cache
 sudo php artisan config:cache
 #sudo php artisan migrate --force
 sudo chmod 600 storage/oauth-private.key
+sudo php artisan optimize:clear
