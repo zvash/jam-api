@@ -34,10 +34,22 @@ class Order extends Model
         'waybill_number',
         'evacuation_permit_image',
         'evacuation_permit_number',
+        'driver_is_paid',
+        'user_is_paid',
     ];
 
     protected $casts = [
         'pickup_date' => 'datetime',
+    ];
+
+    protected $hidden = [
+        'driver_is_paid',
+        'user_is_paid',
+    ];
+
+    protected $appends = [
+        'waybill_url',
+        'evacuation_permit_url',
     ];
 
     /**
@@ -155,6 +167,7 @@ class Order extends Model
      */
     public function statePrerequisitesIsMet(string $newState)
     {
+        $user = request()->user();
         if ($newState == OrderStatus::ACCEPTED_WAITING_CUSTOMER_APPROVAL) {
             if ($this->final_price_needed && !$this->approximate_price) {
                 throw new \Exception(__('messages.error.order_price_is_not_specified'));
@@ -164,6 +177,31 @@ class Order extends Model
         if ($newState == OrderStatus::PICKED_UP) {
             if (! $this->waybill_image) {
                 throw new \Exception(__('messages.error.order_waybill_not_uploaded'));
+            }
+        }
+
+        if ($newState == OrderStatus::DELIVERED) {
+            if ($this->driver_id && ! $this->evacuation_permit_image && ! $user->isAdmin()) {
+                throw new \Exception(__('messages.error.order_evacuation_permit_not_uploaded'));
+            }
+        }
+
+        if ($newState == OrderStatus::FINISHED) {
+            $errors = [];
+            if ($this->driver_id && ! $this->waybill_number) {
+                $errors[] = __('messages.error.empty_waybill_number');
+            }
+            if ($this->driver_id && ! $this->evacuation_permit_number) {
+                $errors[] = __('messages.error.empty_evacuation_permit_number');
+            }
+            if ($this->driver_id && ! $this->driver_is_paid) {
+                $errors[] = __('messages.error.driver_is_not_paid');
+            }
+            if(! $this->user_is_paid) {
+                $errors[] = __('messages.error.user_is_not_paid');
+            }
+            if ($errors) {
+                throw new \Exception(implode(' - ', $errors));
             }
         }
 
@@ -201,5 +239,29 @@ class Order extends Model
         } else {
             return $this->setDriverToken();
         }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEvacuationPermitUrlAttribute()
+    {
+        if (! $this->evacuation_permit_image) {
+            return null;
+        }
+
+        return rtrim(env('APP_URL'), '/') . '/storage/' . $this->evacuation_permit_image;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWaybillUrlAttribute()
+    {
+        if (! $this->waybill_image) {
+            return null;
+        }
+
+        return rtrim(env('APP_URL'), '/') . '/storage/' . $this->waybill_image;
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "564cfcc82f61a85e89114ff4a0da228d",
+    "content-hash": "59f870578fb50d8e1fa2ac509c01c20b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4272,6 +4272,53 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "slash2nl/nova-back-button",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SLASH2NL/nova-back-button.git",
+                "reference": "ed5d7ee984106cd7e0806c0a9097f1fade247dc8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SLASH2NL/nova-back-button/zipball/ed5d7ee984106cd7e0806c0a9097f1fade247dc8",
+                "reference": "ed5d7ee984106cd7e0806c0a9097f1fade247dc8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SLASH2NL\\NovaBackButton\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SLASH2NL\\NovaBackButton\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card to display a back button.",
+            "keywords": [
+                "Back",
+                "button",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/SLASH2NL/nova-back-button/issues",
+                "source": "https://github.com/SLASH2NL/nova-back-button/tree/v1.0.1"
+            },
+            "time": "2021-05-31T10:00:03+00:00"
         },
         {
             "name": "spatie/once",

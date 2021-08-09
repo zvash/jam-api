@@ -22,6 +22,13 @@ return [
         'just_one_resource_error' => 'Only one :resource can be processed.',
         'not_possible_operation' => 'Performing this operation is not possible.',
         'order_not_cancelable' => 'Order is not Cancelable.',
+        'order_not_acceptable' => 'Order is not Acceptable.',
+        'order_waybill_not_uploaded' => 'Order waybill is not uploaded.',
+        'order_evacuation_permit_not_uploaded' => 'Order evacuation permit is not uploaded.',
+        'empty_waybill_number' => 'Waybill number is empty',
+        'empty_evacuation_permit_number' => 'Evacuation permit number is empty',
+        'driver_is_not_paid' => 'Driver is not paid',
+        'user_is_not_paid' => 'Seller is not paid',
     ],
     'success' => [
         'activation_sent' => 'Activation code is sent to :number',

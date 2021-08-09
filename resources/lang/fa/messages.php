@@ -22,6 +22,13 @@ return [
         'just_one_resource_error' => 'امکان تغییر چند :resource به صورت همزمان وجود ندارد.',
         'not_possible_operation' => 'انجام این عمل امکانپذیر نیست.',
         'order_not_cancelable' => 'امکان لغو سفارش وجود ندارد.',
+        'order_not_acceptable' => 'امکان تایید قیمت وجود ندارد.',
+        'order_waybill_not_uploaded' => 'تصویر بارنامه آپلود نشده است.',
+        'order_evacuation_permit_not_uploaded' => 'تصویر مجوز ترخیص بار آپلود نشده است.',
+        'empty_waybill_number' => 'شماره بارنامه وارد نشده است',
+        'empty_evacuation_permit_number' => 'شماره مجوز خروج وارد نشده است',
+        'driver_is_not_paid' => 'هزینه حمل بار به راننده پرداخت نشده است',
+        'user_is_not_paid' => 'هزینه مرسوله به فروشنده پرداخت نشده است',
     ],
     'success' => [
         'activation_sent' => 'کد فعال‌سازی به :number ارسال شد.',

@@ -7,6 +7,7 @@ use App\Exceptions\ContentWasNotFountException;
 use App\Exceptions\OperationNotPossibleException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\UploadSingleImageRequest;
 use App\Models\DriverAcceptOrder;
 use App\Models\Order;
 use App\Repositories\OrderRepository;
@@ -85,6 +86,40 @@ class DriverOrderController extends Controller
     }
 
     /**
+     * @param UploadSingleImageRequest $request
+     * @param Order $order
+     * @param OrderRepository $repository
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ContentWasNotFountException
+     */
+    public function uploadWaybill(UploadSingleImageRequest $request, Order $order, OrderRepository $repository)
+    {
+        $request->validated();
+        $user = $request->user();
+        if ($order->driver_id && $user->id == $order->driver_id) {
+            return $this->success($repository->saveWaybillImage($request, $order));
+        }
+        throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
+    }
+
+    /**
+     * @param UploadSingleImageRequest $request
+     * @param Order $order
+     * @param OrderRepository $repository
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ContentWasNotFountException
+     */
+    public function uploadEvacuationPermit(UploadSingleImageRequest $request, Order $order, OrderRepository $repository)
+    {
+        $request->validated();
+        $user = $request->user();
+        if ($order->driver_id && $user->id == $order->driver_id) {
+            return $this->success($repository->saveEvacuationPermitImage($request, $order));
+        }
+        throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
+    }
+
+    /**
      * @param OrderRequest $request
      * @param string $status
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
@@ -98,6 +133,11 @@ class DriverOrderController extends Controller
         $order = Order::find($inputs['order_id']);
         if ($order->driver_id == $user->id) {
             if ($order->stateTransitionIsPermitted($status)) {
+                try {
+                    $order->statePrerequisitesIsMet($status);
+                } catch (\Exception $exception) {
+                    throw new OperationNotPossibleException($exception->getMessage());
+                }
                 $order = $order->updateOrderStatus($status);
                 return $this->success($order);
             }

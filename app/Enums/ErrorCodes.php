@@ -17,5 +17,6 @@ class ErrorCodes extends Enum
     const CONTENT_WAS_NOT_FOUND = 4009;
     const ORDER_CREATION_ERROR = 4010;
     const ORDER_NOT_CANCELABLE = 4011;
-    const OPERATION_NOT_POSSIBLE = 4012;
+    const ORDER_NOT_Acceptable = 4012;
+    const OPERATION_NOT_POSSIBLE = 4013;
 }

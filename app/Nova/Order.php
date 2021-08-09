@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use App\Enums\OrderStatus;
 use App\Nova\Actions\AcceptPendingOrder;
+use App\Nova\Actions\CloseOrder;
+use App\Nova\Actions\DeliverOrder;
 use App\Nova\Actions\RejectOrder;
 use App\Nova\OrderImage;
 use Dpsoft\NovaPersianDate\PersianDate;
@@ -156,6 +158,10 @@ class Order extends Resource
                     return $value ? number_format($value) : $value;
                 }),
 
+            Boolean::make(__('nova.driver_is_paid'), 'driver_is_paid'),
+
+            Boolean::make(__('nova.user_is_paid'), 'user_is_paid'),
+
             Text::make(__('nova.final_driver_price'), 'final_driver_price')
                 ->showOnIndex(false)
                 ->displayUsing(function ($value) {
@@ -225,13 +231,53 @@ class Order extends Resource
             AcceptPendingOrder::make()
                 ->confirmButtonText(__('nova.accept'))
                 ->cancelButtonText(__('nova.cancel'))
-                ->showOnTableRow(),
+                ->showOnTableRow()
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof \App\Models\Order
+                        && $this->resource->status == OrderStatus::PENDING;
+                }),
 
             RejectOrder::make()
                 ->confirmButtonText(__('nova.reject'))
                 ->cancelButtonText(__('nova.cancel'))
                 ->confirmText(__('nova.reject_order_confirmation'))
-                ->showOnTableRow(),
+                ->showOnTableRow()
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof \App\Models\Order
+                        && $this->resource->status == OrderStatus::PENDING;
+                }),
+
+            DeliverOrder::make()
+                ->confirmButtonText(__('nova.delivered'))
+                ->cancelButtonText(__('nova.cancel'))
+                ->confirmText(__('nova.was_order_delivered'))
+                ->showOnTableRow()
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof \App\Models\Order
+                        && $this->resource->status == OrderStatus::ACCEPTED_DRIVER_NOT_NEEDED;
+                }),
+
+            CloseOrder::make()
+                ->confirmButtonText(__('nova.close'))
+                ->cancelButtonText(__('nova.cancel'))
+                ->showOnTableRow()
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof \App\Models\Order
+                        && $this->resource->status == OrderStatus::DELIVERED;
+                })
+                ->setModel($this->resource),
         ];
     }
 }

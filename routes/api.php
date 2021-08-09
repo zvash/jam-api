@@ -69,7 +69,10 @@ Route::group(['prefix' => 'v1'], function ($router) {
 
                     $router->post('/register', [OrderController::class, 'store']);
 
+                    $router->get('{order}/get', [OrderController::class, 'get']);
+
                     $router->post('/{order}/cancel', [OrderController::class, 'cancel']);
+                    $router->post('/{order}/accept', [OrderController::class, 'accept']);
 
                 });
 
@@ -107,6 +110,9 @@ Route::group(['prefix' => 'v1'], function ($router) {
                     $router->post('/orders/moving', [DriverOrderController::class, 'announceMoving']);
                     $router->post('/orders/picked-up', [DriverOrderController::class, 'announcePickingUp']);
                     $router->post('/orders/delivered', [DriverOrderController::class, 'announceDelivered']);
+
+                    $router->post('/orders/{order}/uploads/waybill', [DriverOrderController::class, 'uploadWaybill']);
+                    $router->post('/orders/{order}/uploads/evacuation', [DriverOrderController::class, 'uploadEvacuationPermit']);
                 });
             });
 

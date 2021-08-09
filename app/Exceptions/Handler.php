@@ -69,6 +69,10 @@ class Handler extends ExceptionHandler
             return $this->failWithCode($e->getMessage(), ErrorCodes::ORDER_NOT_CANCELABLE);
         });
 
+        $this->renderable(function (OrderIsNotAcceptableException $e, $request) {
+            return $this->failWithCode($e->getMessage(), ErrorCodes::ORDER_NOT_CANCELABLE);
+        });
+
         $this->renderable(function (OperationNotPossibleException $e, $request) {
             return $this->failWithCode($e->getMessage(), ErrorCodes::OPERATION_NOT_POSSIBLE);
         });

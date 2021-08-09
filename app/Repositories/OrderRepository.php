@@ -9,6 +9,7 @@ use App\Events\NewOrderSuggestionsForDriversCreated;
 use App\Events\OrderWasCreated;
 use App\Exceptions\ContentWasNotFountException;
 use App\Exceptions\OrderCreationError;
+use App\Exceptions\OrderIsNotAcceptableException;
 use App\Exceptions\OrderIsNotCancelableException;
 use App\Exceptions\UserReachedMaxLocationsException;
 use App\Http\Requests\StoreOrderRequest;
@@ -20,6 +21,7 @@ use App\Models\Order;
 use App\Models\OrderImage;
 use App\Models\OrderStatusLog;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends BaseRepository
@@ -99,6 +101,28 @@ class OrderRepository extends BaseRepository
             return $order->updateOrderStatus(OrderStatus::CANCELED_BY_CUSTOMER);
         }
         throw new OrderIsNotCancelableException(__('messages.error.order_not_cancelable'));
+    }
+
+    /**
+     * @param User $user
+     * @param Order $order
+     * @return Order
+     * @throws ContentWasNotFountException
+     * @throws OrderIsNotAcceptableException
+     */
+    public function acceptOrder(User $user, Order $order)
+    {
+        if ($order->user_id != $user->id) {
+            throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
+        }
+        $nextState = OrderStatus::ACCEPTED_DRIVER_NOT_NEEDED;
+        if ($order->requires_driver) {
+            $nextState = OrderStatus::ACCEPTED_WAITING_FOR_DRIVER;
+        }
+        if ($order->stateTransitionIsPermitted($nextState)) {
+            return $order->updateOrderStatus($nextState);
+        }
+        throw new OrderIsNotAcceptableException(__('messages.error.order_not_acceptable'));
     }
 
     /**
@@ -208,6 +232,32 @@ class OrderRepository extends BaseRepository
             ->whereNull('driver_id')
             ->with(['location', 'images'])
             ->get();
+    }
+
+    /**
+     * @param Request $request
+     * @param Order $order
+     * @return Order
+     */
+    public function saveWaybillImage(Request $request, Order $order)
+    {
+        $path = $this->saveFileFromRequest($request, 'image', 'orders');
+        $order->waybill_image = $path;
+        $order->save();
+        return $order;
+    }
+
+    /**
+     * @param Request $request
+     * @param Order $order
+     * @return Order
+     */
+    public function saveEvacuationPermitImage(Request $request, Order $order)
+    {
+        $path = $this->saveFileFromRequest($request, 'image', 'orders');
+        $order->evacuation_permit_image = $path;
+        $order->save();
+        return $order;
     }
 
     /**
