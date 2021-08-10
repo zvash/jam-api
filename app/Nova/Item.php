@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\UpdatePriceList;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
@@ -59,6 +60,9 @@ class Item extends Resource
                 ->rules('nullable', 'mimes:jpeg,jpg,png'),
 
             Currency::make('Price')
+                ->displayUsing(function($amount){
+                    return number_format($amount);
+                })
                 ->step(1),
         ];
     }
@@ -104,6 +108,9 @@ class Item extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            UpdatePriceList::make()
+                ->standalone(),
+        ];
     }
 }

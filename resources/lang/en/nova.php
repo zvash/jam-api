@@ -62,4 +62,5 @@ return [
     'was_order_delivered' => 'Was Order Delivered?',
     'waybill_url' => 'ٌWaybill Image',
     'evacuation_permit_url' => 'Evacuation Permit Image',
+    'update_price_list' => 'Update Price List',
 ];

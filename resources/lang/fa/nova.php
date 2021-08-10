@@ -62,4 +62,5 @@ return [
     'was_order_delivered' => 'آیا سفارش تحویل داده شده است؟',
     'waybill_url' => 'تصویر بارنامه',
     'evacuation_permit_url' => 'تصویر مجوز خروج',
+    'update_price_list' => 'بروز رسانی لیست قیمت',
 ];
