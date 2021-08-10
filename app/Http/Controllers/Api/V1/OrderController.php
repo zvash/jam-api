@@ -45,8 +45,8 @@ class OrderController extends Controller
      * @param Order $order
      * @param OrderRepository $repository
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     * @throws \App\Exceptions\ContentWasNotFountException
-     * @throws \App\Exceptions\OrderIsNotCancelableException
+     * @throws ContentWasNotFountException
+     * @throws \App\Exceptions\OrderIsNotAcceptableException
      */
     public function accept(Request $request, Order $order, OrderRepository $repository)
     {
@@ -67,5 +67,18 @@ class OrderController extends Controller
             return $this->success($order);
         }
         throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
+    }
+
+    /**
+     * @param Request $request
+     * @param string $state
+     * @param OrderRepository $repository
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ContentWasNotFountException
+     */
+    public function getOrdersByLogicalState(Request $request, string $state, OrderRepository $repository)
+    {
+        $user = $request->user();
+        return $this->success($repository->getOrdersByLogicalStatus($user, $state));
     }
 }

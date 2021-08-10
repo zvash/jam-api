@@ -261,6 +261,54 @@ class OrderRepository extends BaseRepository
     }
 
     /**
+     * @param User $user
+     * @param string $state
+     * @param int $paginate
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @throws ContentWasNotFountException
+     */
+    public function getOrdersByLogicalStatus(User $user, string $state, int $paginate = 10)
+    {
+        $logicalStates = [
+            'waiting' => [
+                OrderStatus::PENDING,
+            ],
+            'active' => [
+                OrderStatus::ACCEPTED_WAITING_CUSTOMER_APPROVAL,
+                OrderStatus::ACCEPTED_WAITING_FOR_DRIVER,
+                OrderStatus::ACCEPTED_BY_DRIVER,
+                OrderStatus::ACCEPTED_DRIVER_NOT_NEEDED,
+                OrderStatus::DRIVER_HEADING_TO_LOCATION,
+                OrderStatus::PICKED_UP,
+            ],
+            'finished' => [
+                OrderStatus::DELIVERED,
+                OrderStatus::FINISHED,
+            ],
+            'canceled' => [
+                OrderStatus::REJECTED,
+                OrderStatus::CANCELED_BY_CUSTOMER,
+            ],
+        ];
+
+        if (! in_array($state, array_keys($logicalStates))) {
+            throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
+        }
+
+        $query = Order::query()->where('user_id', $user->id);
+        if (count($logicalStates[$state]) == 1) {
+            $query = $query->where('status', $logicalStates[$state][0]);
+        } else {
+            $query = $query->whereIn('status', $logicalStates[$state]);
+        }
+        $query = $query->orderBy('created_at', 'desc');
+        if ($paginate) {
+            return $query->paginate($paginate);
+        }
+        return $query->get();
+    }
+
+    /**
      * @return array
      */
     private function getOrderCreationFields()

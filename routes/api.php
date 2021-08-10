@@ -71,6 +71,8 @@ Route::group(['prefix' => 'v1'], function ($router) {
 
                     $router->get('{order}/get', [OrderController::class, 'get']);
 
+                    $router->get('states/{state}/get', [OrderController::class, 'getOrdersByLogicalState']);
+
                     $router->post('/{order}/cancel', [OrderController::class, 'cancel']);
                     $router->post('/{order}/accept', [OrderController::class, 'accept']);
 
