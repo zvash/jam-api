@@ -89,9 +89,9 @@ class Vehicle extends Resource
                 ->sortable()
                 ->rules('required'),
 
-            Text::make('Chassis Number')
-                ->sortable()
-                ->rules('required'),
+//            Text::make('Chassis Number')
+//                ->sortable()
+//                ->rules('required'),
 
             Text::make('Owner Full Name')
                 ->sortable()
