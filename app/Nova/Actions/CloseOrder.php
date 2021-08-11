@@ -54,6 +54,8 @@ class CloseOrder extends Action
 
                 if (!empty($fields->user_is_paid)) {
                     $model->user_is_paid = $fields->user_is_paid;
+                } else {
+                    $model->user_is_paid = false;
                 }
                 if (!empty($fields->waybill_number)) {
                     $model->waybill_number = $fields->waybill_number;
@@ -63,6 +65,8 @@ class CloseOrder extends Action
                 }
                 if (!empty($fields->driver_is_paid)) {
                     $model->driver_is_paid = $fields->driver_is_paid;
+                } else {
+                    $model->driver_is_paid = false;
                 }
                 $model->save();
 
