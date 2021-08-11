@@ -63,4 +63,13 @@ return [
     'waybill_url' => 'تصویر بارنامه',
     'evacuation_permit_url' => 'تصویر مجوز خروج',
     'update_price_list' => 'بروز رسانی لیست قیمت',
+    'comment' => 'متن',
+    'open' => 'باز',
+    'closed' => 'بسته شده',
+    'Tickets' => 'تیکت های پشتیبانی',
+    'Ticket' => 'تیکت پشتیبانی',
+    'phone' => 'تلفن',
+    'tickets_status' => 'وضعیت تیکت ها',
+    'open_tickets' => 'تیکت های باز',
+    'closed_tickets' => 'تیکت های بسته شده',
 ];

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\DriverOrderController;
 use App\Http\Controllers\Api\V1\ItemController;
 use App\Http\Controllers\Api\V1\LocationController;
 use App\Http\Controllers\Api\V1\OrderController;
+use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,15 @@ Route::group(['prefix' => 'v1'], function ($router) {
 
                     $router->post('/{order}/cancel', [OrderController::class, 'cancel']);
                     $router->post('/{order}/accept', [OrderController::class, 'accept']);
+
+                });
+
+                $router->group(['prefix' => 'tickets'], function ($router) {
+
+                    $router->post('/register', [TicketController::class, 'store']);
+                    $router->post('/{ticket}/close', [TicketController::class, 'closeTicket']);
+                    $router->get('/states/{state}/get', [TicketController::class, 'getTickets']);
+                    $router->get('/{ticket}/get', [TicketController::class, 'getTicketById']);
 
                 });
 

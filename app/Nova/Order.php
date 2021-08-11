@@ -18,9 +18,11 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
+use Titasgailius\SearchRelations\SearchesRelations;
 
 class Order extends Resource
 {
+    use SearchesRelations;
     /**
      * The model the resource corresponds to.
      *
@@ -42,6 +44,15 @@ class Order extends Resource
      */
     public static $search = [
         'id',
+    ];
+
+    /**
+     * The relationship columns that should be searched.
+     *
+     * @var array
+     */
+    public static $searchRelations = [
+        'user' => ['first_name', 'last_name', 'phone'],
     ];
 
     /**

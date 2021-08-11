@@ -63,4 +63,13 @@ return [
     'waybill_url' => 'ٌWaybill Image',
     'evacuation_permit_url' => 'Evacuation Permit Image',
     'update_price_list' => 'Update Price List',
+    'comment' => 'Comment',
+    'open' => 'Open',
+    'closed' => 'Closed',
+    'Tickets' => 'Tickets',
+    'Ticket' => 'Ticket',
+    'phone' => 'Phone',
+    'tickets_status' => '',
+    'open_tickets' => '',
+    'closed_tickets' => '',
 ];
