@@ -200,6 +200,13 @@ class Order extends Model
             if(! $this->user_is_paid) {
                 $errors[] = __('messages.error.user_is_not_paid');
             }
+            if(! $this->final_price) {
+                $errors[] = __('messages.error.empty_final_price');
+            }
+            if(! $this->final_weight) {
+                $errors[] = __('messages.error.empty_final_weight');
+            }
+
             if ($errors) {
                 throw new \Exception(implode(' - ', $errors));
             }

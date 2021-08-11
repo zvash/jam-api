@@ -69,7 +69,8 @@ return [
     'Tickets' => 'Tickets',
     'Ticket' => 'Ticket',
     'phone' => 'Phone',
-    'tickets_status' => '',
-    'open_tickets' => '',
-    'closed_tickets' => '',
+    'tickets_status' => 'Tickets Status',
+    'open_tickets' => 'Open Tickets',
+    'closed_tickets' => 'Closed Tickets',
+    'items_weight' => 'Items Weight',
 ];

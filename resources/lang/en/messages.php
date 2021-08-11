@@ -29,6 +29,8 @@ return [
         'empty_evacuation_permit_number' => 'Evacuation permit number is empty',
         'driver_is_not_paid' => 'Driver is not paid',
         'user_is_not_paid' => 'Seller is not paid',
+        'empty_final_price' => 'Final price is empty',
+        'empty_final_weight' => 'Final weight is empty',
     ],
     'success' => [
         'activation_sent' => 'Activation code is sent to :number',

@@ -72,4 +72,5 @@ return [
     'tickets_status' => 'وضعیت تیکت ها',
     'open_tickets' => 'تیکت های باز',
     'closed_tickets' => 'تیکت های بسته شده',
+    'items_weight' => 'وزن اقلام',
 ];

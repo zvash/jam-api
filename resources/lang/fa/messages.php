@@ -29,6 +29,8 @@ return [
         'empty_evacuation_permit_number' => 'شماره مجوز خروج وارد نشده است',
         'driver_is_not_paid' => 'هزینه حمل بار به راننده پرداخت نشده است',
         'user_is_not_paid' => 'هزینه مرسوله به فروشنده پرداخت نشده است',
+        'empty_final_price' => 'قیمت نهایی وارد نشده است',
+        'empty_final_weight' => 'وزن نهایی وارد نشده است',
     ],
     'success' => [
         'activation_sent' => 'کد فعال‌سازی به :number ارسال شد.',
