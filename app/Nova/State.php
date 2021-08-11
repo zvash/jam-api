@@ -30,7 +30,10 @@ class State extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
+
+    public static $displayInNavigation = false;
 
     /**
      * Default ordering for index query.

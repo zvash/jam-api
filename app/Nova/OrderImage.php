@@ -33,6 +33,8 @@ class OrderImage extends Resource
         'id',
     ];
 
+    public static $displayInNavigation = false;
+
     /**
      * @param Request $request
      * @return bool

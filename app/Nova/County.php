@@ -43,6 +43,8 @@ class County extends Resource
         'id' => 'asc'
     ];
 
+    public static $displayInNavigation = false;
+
     /**
      * Build an "index" query for the given resource.
      *
