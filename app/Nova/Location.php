@@ -35,6 +35,22 @@ class Location extends Resource
     ];
 
     /**
+     * @return array|null|string
+     */
+    public static function label()
+    {
+        return __('nova.locations');
+    }
+
+    /**
+     * @return array|null|string
+     */
+    public static function singularLabel()
+    {
+        return __('nova.location');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request $request

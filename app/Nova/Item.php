@@ -36,6 +36,22 @@ class Item extends Resource
     ];
 
     /**
+     * @return array|null|string
+     */
+    public static function label()
+    {
+        return __('nova.items');
+    }
+
+    /**
+     * @return array|null|string
+     */
+    public static function singularLabel()
+    {
+        return __('nova.item');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request $request
@@ -46,12 +62,12 @@ class Item extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Text::make('Name')
+            Text::make(__('nova.name'), 'name')
                 ->rules('required')
                 ->creationRules('unique:items,name')
                 ->updateRules('unique:items,name,{{resourceId}}'),
 
-            Image::make('Image')
+            Image::make(__('nova.image'), 'image')
                 ->disk('public')
                 ->path('items')
                 ->prunable()
@@ -59,7 +75,7 @@ class Item extends Resource
                 ->nullable()
                 ->rules('nullable', 'mimes:jpeg,jpg,png'),
 
-            Currency::make('Price')
+            Currency::make(__('nova.price'), 'price')
                 ->displayUsing(function($amount){
                     return number_format($amount);
                 })

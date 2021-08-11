@@ -38,6 +38,22 @@ class User extends Resource
     ];
 
     /**
+     * @return array|null|string
+     */
+    public static function label()
+    {
+        return __('nova.users');
+    }
+
+    /**
+     * @return array|null|string
+     */
+    public static function singularLabel()
+    {
+        return __('nova.user');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,9 +62,9 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make(__('nova.id'), 'id')->sortable(),
 
-            Avatar::make('Avatar')
+            Avatar::make(__('nova.image'), 'avatar')
                 ->disk('public')
                 ->rounded()
                 ->path('users/avatars')
@@ -57,42 +73,42 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable', 'mimes:jpeg,jpg,png'),
 
-            Text::make('Name')
+            Text::make(__('nova.name'), 'name')
                 ->sortable()
                 ->exceptOnForms(),
 
-            Text::make('First Name')
+            Text::make(__('nova.first_name'), 'first_name')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->onlyOnForms(),
 
-            Text::make('Last Name')
+            Text::make(__('nova.last_name'), 'last_name')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->onlyOnForms(),
 
-            Text::make('Phone')
+            Text::make(__('nova.phone'), 'phone')
                 ->sortable()
                 ->rules('required', 'phone', 'max:254')
                 ->creationRules('unique:users,phone')
                 ->updateRules('unique:users,phone,{{resourceId}}'),
 
-            Text::make('Email')
+            Text::make(__('nova.email'), 'email')
                 ->sortable()
                 ->rules('email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Text::make('National Code')
+            Text::make(__('nova.national_code'), 'national_code')
                 ->sortable()
                 ->rules('max:10'),
 
-            Password::make('Password')
+            Password::make(__('nova.password'), 'password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            Badge::make('Is Courier')
+            Badge::make(__('nova.is_courier'), 'is_courier')
                 ->displayUsing(function ($value) {
                     return $value ? 'YES' : 'NO';
                 })
@@ -102,7 +118,7 @@ class User extends Resource
                 ])
                 ->exceptOnForms(),
 
-            Badge::make('Is Admin')
+            Badge::make(__('nova.is_admin'), 'is_admin')
                 ->displayUsing(function ($value) {
                     return $value ? 'YES' : 'NO';
                 })
@@ -112,7 +128,7 @@ class User extends Resource
                 ])
                 ->exceptOnForms(),
 
-            Badge::make('Phone Is Verified', 'phone_verified_at')
+            Badge::make(__('nova.phone_is_verified'), 'phone_verified_at')
                 ->displayUsing(function ($value) {
                     return $value ? 'YES' : 'NO';
                 })
@@ -122,7 +138,7 @@ class User extends Resource
                 ])
                 ->exceptOnForms(),
 
-            Badge::make('Email Is Verified', 'email_verified_at')
+            Badge::make(__('nova.email_is_verified'), 'email_verified_at')
                 ->displayUsing(function ($value) {
                     return $value ? 'YES' : 'NO';
                 })

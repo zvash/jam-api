@@ -44,6 +44,22 @@ class VehicleType extends Resource
     ];
 
     /**
+     * @return array|null|string
+     */
+    public static function label()
+    {
+        return __('nova.vehicle_types');
+    }
+
+    /**
+     * @return array|null|string
+     */
+    public static function singularLabel()
+    {
+        return __('nova.vehicle_type');
+    }
+
+    /**
      * Build an "index" query for the given resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request

@@ -35,6 +35,22 @@ class Vehicle extends Resource
     ];
 
     /**
+     * @return array|null|string
+     */
+    public static function label()
+    {
+        return __('nova.vehicles');
+    }
+
+    /**
+     * @return array|null|string
+     */
+    public static function singularLabel()
+    {
+        return __('nova.vehicle');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request $request
