@@ -12,6 +12,6 @@ sudo php artisan view:clear
 sudo php artisan route:cache
 sudo php artisan event:cache
 sudo php artisan config:cache
-sudo php artisan migrate --force
+sudo docker exec -it milanjam php artisan migrate --force
 sudo chmod 600 storage/oauth-private.key
 sudo php artisan optimize:clear
