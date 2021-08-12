@@ -110,4 +110,7 @@ return [
     'sellers' => 'Sellers',
     'add_edit_sellers_challenge' => 'Add or Edit Sellers\'s Challenge',
     'goal_orders_weight_sum' => 'Goal Orders Weight Sum (Kg)',
+    'progress' => 'Progress',
+    'amount' => 'Amount',
+    'monthly_challenges_stats' => 'Monthly Challenges Stats',
 ];

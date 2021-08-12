@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2365b83a3423551034e826d3500f1f15",
+    "content-hash": "0944cddba69d017a920d6f72bc1cbd4d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4272,6 +4272,60 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "signifly/nova-progressbar-field",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/signifly/nova-progressbar-field.git",
+                "reference": "1f7b638d7c725e103c50901caa6488a150c3b526"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/signifly/nova-progressbar-field/zipball/1f7b638d7c725e103c50901caa6488a150c3b526",
+                "reference": "1f7b638d7c725e103c50901caa6488a150c3b526",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Signifly\\Nova\\Fields\\ProgressBar\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Signifly\\Nova\\Fields\\ProgressBar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ro Kleine Sonne",
+                    "email": "ro@signifly.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova progress bar field.",
+            "keywords": [
+                "fields",
+                "laravel",
+                "nova",
+                "progressbar"
+            ],
+            "support": {
+                "issues": "https://github.com/signifly/nova-progressbar-field/issues",
+                "source": "https://github.com/signifly/nova-progressbar-field/tree/master"
+            },
+            "time": "2019-09-27T12:42:26+00:00"
         },
         {
             "name": "slash2nl/nova-back-button",

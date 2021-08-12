@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -59,7 +60,23 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function monthlyChallengeStats()
+    {
+        return $this->hasOne(MonthlyChallengeStat::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function monthlyChallengesWinnings()
+    {
+        return $this->hasMany(MonthlyChallengeWinner::class);
+    }
+
+    /**
+     * @return HasMany
      */
     public function locations()
     {
@@ -83,7 +100,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function tickets()
     {

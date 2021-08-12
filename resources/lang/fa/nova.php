@@ -110,4 +110,7 @@ return [
     'sellers' => 'فروشندگان',
     'add_edit_sellers_challenge' => 'ایجاد یا ویرایش چالش برای فروشندگان',
     'goal_orders_weight_sum' => 'مجموع وزن سفارش های هدف (کیلوگرم)',
+    'progress' => 'پیشرفت',
+    'amount' => 'مقدار',
+    'monthly_challenges_stats' => 'وضعیت چالش های ماهانه',
 ];

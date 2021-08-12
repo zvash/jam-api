@@ -53,3 +53,15 @@ function numberToNth(int $index) {
     }
     return $index . $suffix;
 }
+
+function float_number_format($value) {
+    if (intval(abs($value)) != abs($value)) {
+        $floatingPart = preg_replace('/^\d*\./', '', abs($value) . '');
+    } else {
+        $floatingPart = '';
+    }
+    if ($floatingPart) {
+        return number_format($value) . '.' . $floatingPart;
+    }
+    return number_format($value);
+}

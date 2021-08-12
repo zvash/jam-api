@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Titasgailius\SearchRelations\SearchesRelations;
 
 class MonthlyChallenge extends Resource
 {
@@ -28,7 +29,7 @@ class MonthlyChallenge extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'description';
 
     /**
      * The columns that should be searched.
@@ -64,6 +65,7 @@ class MonthlyChallenge extends Resource
         }
         return $query;
     }
+
 
     /**
      * @return array|null|string

@@ -26,6 +26,14 @@ class MonthlyChallenge extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function winners()
+    {
+        return $this->hasMany(MonthlyChallengeWinner::class);
+    }
+
+    /**
      * @return string
      */
     public function getGoalAttribute()

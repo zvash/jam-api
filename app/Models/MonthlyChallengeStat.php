@@ -9,6 +9,9 @@ class MonthlyChallengeStat extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'progress',
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -23,5 +26,17 @@ class MonthlyChallengeStat extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getProgressAttribute()
+    {
+        $challenge = $this->challenge;
+        if ($challenge->goal_amount) {
+            return $this->amount / $challenge->goal_amount;
+        }
+        return 0.0;
     }
 }
