@@ -5,9 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MonthlyChallengeStat extends Model
+class MonthlyChallengeWinner extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'monthly_challenge_id',
+        'user_id',
+        'points',
+        'points_needed',
+        'prize',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

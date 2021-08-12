@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\ProcessDriverAcceptRequests;
+use App\Jobs\ProcessMonthlyChallengeWinners;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job(new ProcessDriverAcceptRequests())->everyMinute();
+        $schedule->job(new ProcessMonthlyChallengeWinners())->dailyAt('00:05');
     }
 
     /**
