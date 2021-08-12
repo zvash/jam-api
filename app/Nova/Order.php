@@ -7,7 +7,6 @@ use App\Nova\Actions\AcceptPendingOrder;
 use App\Nova\Actions\CloseOrder;
 use App\Nova\Actions\DeliverOrder;
 use App\Nova\Actions\RejectOrder;
-use App\Nova\OrderImage;
 use Dpsoft\NovaPersianDate\PersianDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;

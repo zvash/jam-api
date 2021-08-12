@@ -226,6 +226,9 @@ class Order extends Model
     public function updateOrderStatus(string $newState)
     {
         $this->status = $newState;
+        if ($newState == OrderStatus::FINISHED) {
+            $this->finished_at = \Carbon\Carbon::now();
+        }
         $this->save();
         event(new OrderStatusUpdated($this));
         return $this;

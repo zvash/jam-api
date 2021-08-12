@@ -23,6 +23,7 @@ class CreateUserRolesTable extends Migration
         \App\Models\Role::create(['name' => 'admin']);
         \App\Models\Role::create(['name' => 'courier']);
         \App\Models\Role::create(['name' => 'normal']);
+        \App\Models\Role::create(['name' => 'seller']);
     }
 
     /**

@@ -20,6 +20,7 @@ use App\Models\Location;
 use App\Models\Order;
 use App\Models\OrderImage;
 use App\Models\OrderStatusLog;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,11 @@ class OrderRepository extends BaseRepository
             }, ARRAY_FILTER_USE_KEY);
 
             $order = Order::query()->create($creationInputs);
+
+            if (! $user->isSeller()) {
+                $sellerRole = Role::getByName('seller');
+                $user->roles()->attach($sellerRole->id);
+            }
 
             if ($request->hasFile('images')) {
                 $files = $request->file('images');
@@ -230,6 +236,7 @@ class OrderRepository extends BaseRepository
             ->whereIn('id', $suggestedOrderIds)
             ->where('status', OrderStatus::ACCEPTED_WAITING_FOR_DRIVER)
             ->whereNull('driver_id')
+            ->orderBy('created_at', 'desc')
             ->with(['location', 'images'])
             ->get();
     }

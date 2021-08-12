@@ -134,6 +134,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return mixed
+     */
+    public function isSeller()
+    {
+        return $this->roles->contains('name', 'seller');
+    }
+
+    /**
      * @param string $role
      * @return mixed
      */
