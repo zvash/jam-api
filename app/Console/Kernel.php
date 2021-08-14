@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->job(new ProcessDriverAcceptRequests())->everyMinute();
+        $schedule->job(new ProcessDriverAcceptRequests())->everyMinute()
+            ->withoutOverlapping(5);
         $schedule->job(new ProcessMonthlyChallengeWinners())->dailyAt('00:05');
     }
 
