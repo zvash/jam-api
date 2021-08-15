@@ -22,6 +22,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             \App\Http\Controllers\Nova\LoginController::class,
             \Laravel\Nova\Http\Controllers\LoginController::class
         );
+
+        Nova::style('admin', public_path('css/rtl.css'));
     }
 
     /**
