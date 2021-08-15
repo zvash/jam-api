@@ -94,20 +94,20 @@ class VehicleType extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('nova.id'), 'id')->sortable(),
 
-            Text::make('Name')
+            Text::make(__('nova.name'), 'name')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->creationRules('unique:vehicle_types,name')
                 ->updateRules('unique:vehicle_types,name,{{resourceId}}'),
 
-            Number::make('Portable Weight (Kg)', 'portable_weight')
+            Number::make(__('nova.portable_weight') . ' (Kg)', 'portable_weight')
                 ->min(500)
                 ->max(100000)
                 ->rules('required', 'min:500', 'max:100000'),
 
-            Image::make('image')
+            Image::make(__('nova.image'), 'image')
                 ->disk('public')
                 ->path('vehicles/images')
                 ->prunable()

@@ -67,19 +67,19 @@ class Location extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('nova.id'), 'id')->sortable(),
 
-            BelongsTo::make('User', 'user', User::class),
+            BelongsTo::make(__('nova.user'), 'user', User::class),
 
-            BelongsTo::make('Province', 'state', State::class),
+            BelongsTo::make(__('nova.state'), 'state', State::class),
 
-            BelongsTo::make('City', 'county', County::class),
+            BelongsTo::make(__('nova.county'), 'county', County::class),
 
-            Text::make('Address'),
+            Text::make(__('nova.address'), 'address'),
 
-            Text::make('Postal Code'),
+            Text::make(__('nova.postal_code'), 'postal_code'),
 
-            Boolean::make('Is Default'),
+            Boolean::make(__('nova.is_default'), 'is_default'),
         ];
     }
 

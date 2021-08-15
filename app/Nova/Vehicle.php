@@ -74,41 +74,41 @@ class Vehicle extends Resource
         $vehicleTypes = \App\Models\VehicleType::all()->pluck('name', 'id');
 
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('nova.id'), 'id')->sortable(),
 
-            BelongsTo::make('Type', 'vehicleType', VehicleType::class)
+            BelongsTo::make(__('nova.type'), 'vehicleType', VehicleType::class)
                 ->exceptOnForms(),
-            Select::make('Type', 'vehicle_type_id')->options($vehicleTypes)
+            Select::make(__('nova.type'), 'vehicle_type_id')->options($vehicleTypes)
                 ->onlyOnForms()
                 ->displayUsingLabels()
                 ->creationRules('required'),
 
-            BelongsTo::make('Driver', 'driver', User::class)
+            BelongsTo::make(__('nova.driver'), 'driver', User::class)
                 ->exceptOnForms(),
-            Select::make('Driver', 'user_id')->options($drivers)
+            Select::make(__('nova.driver'), 'user_id')->options($drivers)
                 ->onlyOnForms()
                 ->displayUsingLabels()
                 ->creationRules('required'),
 
 
-            BelongsTo::make('County', 'county', County::class)
+            BelongsTo::make(__('nova.county'), 'county', County::class)
                 ->exceptOnForms(),
-            Select::make('County', 'county_id')->options($counties)
+            Select::make(__('nova.county'), 'county_id')->options($counties)
                 ->onlyOnForms()
                 ->displayUsingLabels()
                 ->creationRules('required'),
 
-            Text::make('Plate Number')
+            Text::make(__('nova.plate_number'), 'plate_number')
                 ->sortable()
                 ->rules('required', 'max:8', 'min:8')
                 ->creationRules('unique:vehicles,plate_number')
                 ->updateRules('unique:vehicles,plate_number,{{resourceId}}'),
 
-            Text::make('Chassis Number')
+            Text::make(__('nova.chassis_number'), 'chassis_number')
                 ->sortable()
                 ->rules('required'),
 
-            Text::make('Engine Number')
+            Text::make(__('nova.engine_number'), 'engine_number')
                 ->sortable()
                 ->rules('required'),
 
@@ -116,15 +116,15 @@ class Vehicle extends Resource
 //                ->sortable()
 //                ->rules('required'),
 
-            Text::make('Owner Full Name')
+            Text::make(__('nova.owner_full_name'), 'owner_full_name')
                 ->sortable()
                 ->rules('required'),
 
-            Text::make('Owner Phone')
+            Text::make(__('nova.owner_phone'), 'owner_phone')
                 ->sortable()
                 ->rules('required'),
 
-            Text::make('Owner National Code')
+            Text::make(__('nova.owner_national_code'), 'owner_national_code')
                 ->sortable()
                 ->rules('required'),
         ];
