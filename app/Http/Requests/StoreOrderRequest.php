@@ -19,7 +19,7 @@ class StoreOrderRequest extends FormRequest
             'images.*' => 'mimes:jpg,jpeg,png',
             'description' => 'required|string|min:1',
             'location_id' => [
-                'required',
+                'required',//ask if this field is required
                 'exists:locations,id',
                 function ($attribute, $value, $fail) {
                     $user = request()->user();
@@ -33,7 +33,7 @@ class StoreOrderRequest extends FormRequest
             'requires_driver' => 'required|boolean',
             'final_price_needed' => 'required|boolean',
             'approximate_weight' => 'numeric|min:0.1',
-            'pickup_date' => 'date|after:yesterday',
+            'pickup_date' => 'date|after:yesterday|required_if:requires_driver,true',
             'items' => 'array|filled',
             'items.*.id' => 'exists:items',
             'items.*.weight' => 'numeric|min:0.1',

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\NewOrderSuggestionsForDriversCreated;
 use App\Events\OrderStatusUpdated;
 use App\Events\OrderWasCreated;
+use App\Listeners\CheckCampaignMilestones;
 use App\Listeners\LogOrderStatus;
 use App\Listeners\NotifyDrivers;
 use App\Listeners\NotifyOrderSuggestions;
@@ -30,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
         OrderStatusUpdated::class => [
             LogOrderStatus::class,
             NotifyDrivers::class,
+            CheckCampaignMilestones::class,
         ],
         NewOrderSuggestionsForDriversCreated::class => [
             NotifyOrderSuggestions::class

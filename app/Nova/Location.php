@@ -37,6 +37,14 @@ class Location extends Resource
     /**
      * @return array|null|string
      */
+    public static function group()
+    {
+        return __('nova.users');
+    }
+
+    /**
+     * @return array|null|string
+     */
     public static function label()
     {
         return __('nova.locations');

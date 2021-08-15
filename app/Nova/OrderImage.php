@@ -36,6 +36,14 @@ class OrderImage extends Resource
     public static $displayInNavigation = false;
 
     /**
+     * @return array|null|string
+     */
+    public static function group()
+    {
+        return __('nova.Orders');
+    }
+
+    /**
      * @param Request $request
      * @return bool
      */

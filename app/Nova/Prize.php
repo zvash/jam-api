@@ -2,35 +2,28 @@
 
 namespace App\Nova;
 
-use App\Nova\Filters\TicketStatus;
 use Illuminate\Http\Request;
 use Khalin\Nova\Field\Link;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Titasgailius\SearchRelations\SearchesRelations;
 
-class Ticket extends Resource
+class Prize extends Resource
 {
-    use SearchesRelations;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Ticket::class;
+    public static $model = \App\Models\Prize::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'full_title';
 
     /**
      * The columns that should be searched.
@@ -39,15 +32,8 @@ class Ticket extends Resource
      */
     public static $search = [
         'id',
-    ];
-
-    /**
-     * The relationship columns that should be searched.
-     *
-     * @var array
-     */
-    public static $searchRelations = [
-        'user' => ['first_name', 'last_name', 'phone'],
+        'title',
+        'subtitle',
     ];
 
     /**
@@ -55,7 +41,7 @@ class Ticket extends Resource
      */
     public static function group()
     {
-        return __('nova.users');
+        return __('nova.campaigns_and_challenges');
     }
 
     /**
@@ -63,7 +49,7 @@ class Ticket extends Resource
      */
     public static function label()
     {
-        return __('nova.Tickets');
+        return __('nova.prizes');
     }
 
     /**
@@ -71,25 +57,7 @@ class Ticket extends Resource
      */
     public static function singularLabel()
     {
-        return __('nova.Ticket');
-    }
-
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    public static function authorizedToCreate(Request $request)
-    {
-        return false;
-    }
-
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    public function authorizedToUpdate(Request $request)
-    {
-        return $request instanceof ActionRequest;
+        return __('nova.prize');
     }
 
     /**
@@ -112,30 +80,19 @@ class Ticket extends Resource
         return [
             ID::make(__('nova.id'), 'id')->sortable(),
 
-            BelongsTo::make(__('nova.user'), 'user', User::class),
+            Text::make(__('nova.title'), 'title')
+                ->rules('required'),
 
-            Text::make(__('nova.phone'), 'phone'),
-
-            Text::make(__('nova.comment'), 'comment')->onlyOnIndex(),
-            Textarea::make(__('nova.comment'), 'comment')->onlyOnDetail(),
-
-            Link::make(__('nova.image'), 'image_url')
-                ->url(function () {
-                    return "{$this->image_url}";
-                })->text(__('nova.display'))->blank(),
+            Text::make(__('nova.subtitle'), 'subtitle')
+                ->rules('nullable'),
 
             Image::make(__('nova.image'), 'image')
                 ->disk('public')
-            ->onlyOnDetail(),
-
-            Badge::make(__('nova.status'), 'is_open')
-                ->displayUsing(function ($value) {
-                    return $value ? __('nova.open') : __('nova.closed');
-                })
-            ->map([
-                __('nova.open') => 'info',
-                __('nova.closed') => 'success',
-            ])->exceptOnForms()
+                ->path('prizes')
+                ->prunable()
+                ->deletable()
+                ->nullable()
+                ->rules('nullable', 'mimes:jpeg,jpg,png'),
         ];
     }
 
@@ -158,9 +115,7 @@ class Ticket extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new TicketStatus(),
-        ];
+        return [];
     }
 
     /**

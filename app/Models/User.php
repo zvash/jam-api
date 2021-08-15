@@ -108,6 +108,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return HasMany
+     */
+    public function campaignPrizes()
+    {
+        return $this->hasMany(UserCampaignLevelPrize::class);
+    }
+
+    /**
      * Override the field which is used for username in the authentication
      * @param string $username
      * @return User

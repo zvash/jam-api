@@ -57,6 +57,14 @@ class Order extends Resource
     /**
      * @return array|null|string
      */
+    public static function group()
+    {
+        return __('nova.Orders');
+    }
+
+    /**
+     * @return array|null|string
+     */
     public static function label()
     {
         return __('nova.Orders');

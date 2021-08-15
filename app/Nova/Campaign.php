@@ -2,34 +2,31 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddOrEditDriversMonthlyChallenge;
-use App\Nova\Actions\AddOrEditSellersMonthlyChallenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Line;
-use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Titasgailius\SearchRelations\SearchesRelations;
 
-class MonthlyChallenge extends Resource
+class Campaign extends Resource
 {
+
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\MonthlyChallenge::class;
+    public static $model = \App\Models\Campaign::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'description';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -38,15 +35,7 @@ class MonthlyChallenge extends Resource
      */
     public static $search = [
         'id',
-    ];
-
-    /**
-     * Default ordering for index query.
-     *
-     * @var array
-     */
-    public static $indexDefaultOrder = [
-        'is_active' => 'desc'
+        'title',
     ];
 
     /**
@@ -57,30 +46,13 @@ class MonthlyChallenge extends Resource
         return __('nova.campaigns_and_challenges');
     }
 
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        if (empty($request->get('orderBy'))) {
-            $query->getQuery()->orders = [];
-            return $query->orderBy(key(static::$indexDefaultOrder), reset(static::$indexDefaultOrder))
-                ->orderBy('starts_at', 'desc');
-        }
-        return $query;
-    }
-
 
     /**
      * @return array|null|string
      */
     public static function label()
     {
-        return __('nova.monthly_challenges');
+        return __('nova.campaigns');
     }
 
     /**
@@ -88,7 +60,7 @@ class MonthlyChallenge extends Resource
      */
     public static function singularLabel()
     {
-        return __('nova.monthly_challenge');
+        return __('nova.campaign');
     }
 
     /**
@@ -129,22 +101,7 @@ class MonthlyChallenge extends Resource
         return [
             ID::make(__('nova.id'), 'id')->sortable(),
 
-            Text::make(__('nova.year'), 'year')->sortable(),
-
-            Text::make(__('nova.month'), 'month')
-                ->displayUsing(function ($value) {
-                    return $this->months($value);
-                })
-                ->sortable(),
-
-            Stack::make(__('nova.challenge'), [
-                Line::make('description')->asSubTitle(),
-                Line::make('prize')
-                    ->extraClasses('text-primary-dark font-bold')
-                    ->asSmall(),
-            ]),
-
-            Text::make(__('nova.goal'), 'goal'),
+            Text::make(__('nova.title'), 'title'),
 
             Badge::make(__('nova.related_to'), 'user_type')
                 ->displayUsing(function ($value) {
@@ -152,19 +109,21 @@ class MonthlyChallenge extends Resource
                     $key = 'nova.' . $value;
                     return __($key);
                 })
-            ->map([
-                __('nova.drivers') => 'info',
-                __('nova.sellers') => 'info',
-            ]),
+                ->map([
+                    __('nova.drivers') => 'info',
+                    __('nova.sellers') => 'info',
+                ]),
 
             Badge::make(__('nova.status'), 'is_active')
                 ->displayUsing(function ($value) {
                     return $value ? __('nova.active') : __('nova.inactive');
                 })
-            ->map([
-                __('nova.active') => 'success',
-                __('nova.inactive') => 'warning',
-            ]),
+                ->map([
+                    __('nova.active') => 'success',
+                    __('nova.inactive') => 'warning',
+                ]),
+
+            HasMany::make(__('nova.campaign_levels'), 'levels', CampaignLevel::class),
         ];
     }
 
@@ -209,40 +168,6 @@ class MonthlyChallenge extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            AddOrEditDriversMonthlyChallenge::make()
-                ->confirmButtonText(__('nova.create_challenge'))
-                ->standalone(),
-
-            AddOrEditSellersMonthlyChallenge::make()
-                ->confirmButtonText(__('nova.create_challenge'))
-                ->standalone(),
-        ];
-    }
-
-    /**
-     * @param int $value
-     * @return mixed|string
-     */
-    private function months(int $value)
-    {
-        $months = [
-            'فروردین',
-            'اردیبهشت',
-            'خرداد',
-            'تیر',
-            'مرداد',
-            'شهریور',
-            'مهر',
-            'آبان',
-            'آذر',
-            'دی',
-            'بهمن',
-            'اسفند',
-        ];
-        if (array_key_exists($value - 1, $months)) {
-            return $months[$value - 1];
-        }
-        return ' - ';
+        return [];
     }
 }

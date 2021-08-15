@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CampaignController;
 use App\Http\Controllers\Api\V1\DriverCountyController;
 use App\Http\Controllers\Api\V1\DriverOrderController;
 use App\Http\Controllers\Api\V1\ItemController;
@@ -91,6 +92,12 @@ Route::group(['prefix' => 'v1'], function ($router) {
                 $router->group(['prefix' => 'items'], function ($router) {
 
                     $router->get('/all', [ItemController::class, 'getItems']);
+
+                });
+
+                $router->group(['prefix' => 'campaigns'], function ($router) {
+
+                    $router->get('/type/{type}/all', [CampaignController::class, 'getAvailableCampaign']);
 
                 });
 
