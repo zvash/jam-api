@@ -122,8 +122,8 @@ return [
     'milestone' => 'حد نصاب',
     'campaign_level' => 'مرحله چالش',
     'campaign_levels' => 'مراحل چالش',
-    'user_campaign_level' => 'مرحله چالش برای کاربر',
-    'user_campaign_levels' => 'مراحل چالش برای کاربر',
+    'user_campaign_level' => 'مراحل چالش دائمی برای کاربر',
+    'user_campaign_levels' => 'مراحل چالش دائمی برای کاربران',
     'handed_over' => 'اهدا شده',
     'campaigns_and_challenges' => 'کمپین ها و چالش ها',
 ];

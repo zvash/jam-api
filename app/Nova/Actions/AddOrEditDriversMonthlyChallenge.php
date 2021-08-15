@@ -5,6 +5,7 @@ namespace App\Nova\Actions;
 use App\Enums\GoalType;
 use App\Enums\UserType;
 use App\Models\MonthlyChallenge;
+use App\Models\Prize;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,6 +16,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Morilog\Jalali\Jalalian;
+use Techouse\SelectAutoComplete\SelectAutoComplete;
 
 class AddOrEditDriversMonthlyChallenge extends Action
 {
@@ -28,8 +30,8 @@ class AddOrEditDriversMonthlyChallenge extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param  \Laravel\Nova\Fields\ActionFields $fields
+     * @param  \Illuminate\Support\Collection $models
      * @return mixed
      */
     public function handle(ActionFields $fields, Collection $models)
@@ -48,7 +50,7 @@ class AddOrEditDriversMonthlyChallenge extends Action
         $nextMonth = (new Jalalian($year, $month, 1))->addMonths(1);
         $endsAt = (new Jalalian($nextMonth->getYear(), $nextMonth->getMonth(), 1))->toCarbon();
         $description = $fields->challenge_name;
-        $prize = $fields->challenge_prize;
+        $prizeId = $fields->challenge_prize;
         $goalAmount = $fields->goal_order_transport_count;
         $now = \Carbon\Carbon::now();
         $isActive = $now >= $startsAt && $now <= $endsAt;
@@ -56,7 +58,7 @@ class AddOrEditDriversMonthlyChallenge extends Action
             ->setAttribute('year', $year)
             ->setAttribute('month', $month)
             ->setAttribute('description', $description)
-            ->setAttribute('prize', $prize)
+            ->setAttribute('prize_id', $prizeId)
             ->setAttribute('goal_type', GoalType::ORDER_COUNT)
             ->setAttribute('goal_amount', $goalAmount)
             ->setAttribute('starts_at', $startsAt)
@@ -76,6 +78,7 @@ class AddOrEditDriversMonthlyChallenge extends Action
         $months = $this->getMonths();
         $years = $this->getYears();
         $allYears = array_keys($years);
+        $prizes = $this->getPrizes();
 
         return [
             Select::make(__('nova.year'), 'year')
@@ -92,8 +95,9 @@ class AddOrEditDriversMonthlyChallenge extends Action
             Text::make(__('nova.challenge_name'), 'challenge_name')
                 ->rules('required'),
 
-            Text::make(__('nova.challenge_prize'), 'challenge_prize')
-                ->rules('required'),
+            SelectAutoComplete::make(__('nova.challenge_prize'), 'challenge_prize')
+                ->options($prizes)
+                ->displayUsingLabels(),
 
             Number::make(__('nova.goal_order_transport_count'), 'goal_order_transport_count')
                 ->step(1)
@@ -133,6 +137,14 @@ class AddOrEditDriversMonthlyChallenge extends Action
             $year => $year,
             $nextYear => $nextYear,
         ];
+    }
 
+    /**
+     * @return array
+     */
+    protected function getPrizes()
+    {
+        $prizes = Prize::query()->get()->pluck('full_title', 'id')->all();
+        return $prizes;
     }
 }

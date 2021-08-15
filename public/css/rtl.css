@@ -1,4 +1,4 @@
-.cursor-pointer.icons {
+.cursor-pointer.icons, .single-select-wrapper > .icons {
     right: auto !important;
     left: 0 !important;
 }

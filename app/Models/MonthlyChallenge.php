@@ -34,6 +34,14 @@ class MonthlyChallenge extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function prize()
+    {
+        return $this->belongsTo(Prize::class);
+    }
+
+    /**
      * @return string
      */
     public function getGoalAttribute()

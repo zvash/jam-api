@@ -14,7 +14,7 @@ class MonthlyChallengeWinner extends Model
         'user_id',
         'points',
         'points_needed',
-        'prize',
+        'prize_id',
     ];
 
     /**

@@ -7,6 +7,7 @@ use App\Nova\Actions\AddOrEditSellersMonthlyChallenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Line;
 use Laravel\Nova\Fields\Stack;
@@ -137,14 +138,12 @@ class MonthlyChallenge extends Resource
                 })
                 ->sortable(),
 
-            Stack::make(__('nova.challenge'), [
-                Line::make('description')->asSubTitle(),
-                Line::make('prize')
-                    ->extraClasses('text-primary-dark font-bold')
-                    ->asSmall(),
-            ]),
+            Text::make(__('nova.challenge'), 'description'),
 
             Text::make(__('nova.goal'), 'goal'),
+
+            BelongsTo::make(__('nova.prize'), 'prize', Prize::class)
+                ->required(),
 
             Badge::make(__('nova.related_to'), 'user_type')
                 ->displayUsing(function ($value) {

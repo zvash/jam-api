@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\DriverCountyController;
 use App\Http\Controllers\Api\V1\DriverOrderController;
 use App\Http\Controllers\Api\V1\ItemController;
 use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\MonthlyChallengeController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -98,6 +99,12 @@ Route::group(['prefix' => 'v1'], function ($router) {
                 $router->group(['prefix' => 'campaigns'], function ($router) {
 
                     $router->get('/type/{type}/all', [CampaignController::class, 'getAvailableCampaign']);
+
+                });
+
+                $router->group(['prefix' => 'challenges'], function ($router) {
+
+                    $router->get('/current/type/{type}/get', [MonthlyChallengeController::class, 'getCurrentChallengeStats']);
 
                 });
 

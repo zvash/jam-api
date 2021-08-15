@@ -41,7 +41,7 @@ class ProcessMonthlyChallengeWinners implements ShouldQueue
                         'user_id' => $winner->user_id,
                         'points' => $winner->amount,
                         'points_needed' => $challenge->goal_amount,
-                        'prize' => $challenge->prize,
+                        'prize_id' => $challenge->prize->id,
                     ];
                     MonthlyChallengeWinner::query()->create($record);
                 }
