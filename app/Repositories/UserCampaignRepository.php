@@ -17,20 +17,31 @@ class UserCampaignRepository extends BaseRepository
     /**
      * @param User $user
      * @param Campaign $campaign
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return array
      */
     public function getAvailableLevels(User $user, Campaign $campaign)
     {
-        $passedLevels = $user->campaignPrizes()->pluck('campaign_level_id')->all();
+        $passedLevels = $user->campaignPrizes()->with('prize')->get()->toArray();
+        $prizesByLevelId = [];
+        foreach ($passedLevels as $level) {
+            $prizesByLevelId[$level['id']] = $level['prize'];
+        }
+        $passedLevelsIds = $user->campaignPrizes()->pluck('campaign_level_id')->all();
         $currentPoints = $this->getCurrentScore($user, $campaign);
         $availableLevels = CampaignLevel::query()
             ->where('campaign_id', $campaign->id)
             ->where('milestone', '>', $currentPoints)
-            ->orWhereIn('id', $passedLevels)
+            ->orWhereIn('id', $passedLevelsIds)
             ->orderBy('milestone')
             ->with('prize')
             ->get()
-            ->makeHidden('campaign');
+            ->makeHidden('campaign')
+            ->toArray();
+        foreach ($availableLevels as $key => $level) {
+            if (array_key_exists($level['id'], $prizesByLevelId)) {
+                $availableLevels[$key]['prize'] = $prizesByLevelId[$level['id']];
+            }
+        }
         return $availableLevels;
     }
 

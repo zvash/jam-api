@@ -31,7 +31,7 @@ class CampaignController extends Controller
         }
         $campaign = $repository->getCampaignByUserType($type);
         $result['campaign'] = $campaign->toArray();
-        $result['levels'] = $repository->getAvailableLevels($user, $campaign)->toArray();
+        $result['levels'] = $repository->getAvailableLevels($user, $campaign);
         $result['score'] = $repository->getCurrentScore($user, $campaign);
         return $this->success($result);
 
