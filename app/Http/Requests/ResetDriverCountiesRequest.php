@@ -15,6 +15,8 @@ class ResetDriverCountiesRequest extends FormRequest
     public function rules()
     {
         return [
+            'state_ids' => 'array',
+            'state_ids.*' => 'int|exists:states,id',
             'county_ids' => 'array',
             'county_ids.*' => 'int|exists:counties,id',
         ];

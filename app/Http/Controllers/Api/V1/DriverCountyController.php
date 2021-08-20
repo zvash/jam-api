@@ -22,7 +22,8 @@ class DriverCountyController extends Controller
         $user = $request->user();
         $inputs = $request->validated();
 
+        $stateIds = $inputs['state_ids'] ?? [];
         $countyIds = $inputs['county_ids'] ?? [];
-        return $this->success($repository->resetCounties($user, $countyIds));
+        return $this->success($repository->resetCounties($user, $countyIds, $stateIds));
     }
 }
