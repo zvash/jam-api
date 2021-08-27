@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-image-link": "cd nova-components/ImageLink && npm run dev",
+        "build-image-link-prod": "cd nova-components/ImageLink && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

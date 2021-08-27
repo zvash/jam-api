@@ -20,6 +20,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Http\Request;
+use Milanjam\ImageLink\ImageLink;
 
 class CloseOrder extends Action
 {
@@ -125,8 +126,20 @@ class CloseOrder extends Action
     {
         $fields = [];
 
+        $fields[] = ImageLink::make(__('nova.waybill_url'), 'waybill_url')
+            ->url(function () {
+                return "{$this->model->waybill_url}";
+            })->text(__('nova.display'))->blank()
+            ->default($this->model->waybill_url);
+
         $fields[] = Text::make(__('nova.waybill_number'), 'waybill_number')
             ->default($this->model ? $this->model->waybill_number : null);
+
+        $fields[] = ImageLink::make(__('nova.evacuation_permit_url'), 'evacuation_permit_url')
+            ->url(function () {
+                return "{$this->model->evacuation_permit_url}";
+            })->text(__('nova.display'))->blank()
+            ->default($this->model->evacuation_permit_url);
 
         $fields[] = Text::make(__('nova.evacuation_permit_number'), 'evacuation_permit_number')
             ->default($this->model ? $this->model->evacuation_permit_number : null);

@@ -7,6 +7,7 @@ use Khalin\Nova\Field\Link;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Milanjam\ImageLink\ImageLink;
 
 class OrderImage extends Resource
 {
@@ -81,7 +82,7 @@ class OrderImage extends Resource
         return [
             ID::make(__('nova.id'), 'id')->sortable(),
 
-            Link::make(__('nova.image'), 'url')
+            ImageLink::make(__('nova.image'), 'url')
                 ->url(function () {
                     return "{$this->url}";
                 })->text(__('nova.display'))->blank()
