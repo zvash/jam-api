@@ -9,7 +9,9 @@
         "prod": "npm run production",
         "production": "mix --production",
         "build-image-link": "cd nova-components/ImageLink && npm run dev",
-        "build-image-link-prod": "cd nova-components/ImageLink && npm run prod"
+        "build-image-link-prod": "cd nova-components/ImageLink && npm run prod",
+        "build-key-two-values": "cd nova-components/KeyTwoValues && npm run dev",
+        "build-key-two-values-prod": "cd nova-components/KeyTwoValues && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

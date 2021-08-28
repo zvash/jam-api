@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffeafe8c6589b366c98bcfa382b96631",
+    "content-hash": "1fcf1d047ad89f7ae90b13b2ea1381cd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2789,6 +2789,42 @@
             "autoload": {
                 "psr-4": {
                     "Milanjam\\ImageLink\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "milanjam/key-two-values",
+            "version": "dev-develop",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/KeyTwoValues",
+                "reference": "e0dc92222640872c544969f0b238bd3b53bcc33f"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Milanjam\\KeyTwoValues\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Milanjam\\KeyTwoValues\\": "src/"
                 }
             },
             "license": [

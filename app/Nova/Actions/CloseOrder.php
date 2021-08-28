@@ -21,6 +21,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Http\Request;
 use Milanjam\ImageLink\ImageLink;
+use Milanjam\KeyTwoValues\KeyTwoValues;
 
 class CloseOrder extends Action
 {
@@ -88,6 +89,7 @@ class CloseOrder extends Action
 
                 if (array_key_exists('items_weight', $parameters)) {
                     $itemsWeight = json_decode($parameters['items_weight']);
+                    dd($itemsWeight);
                     if ($itemsWeight) {
                         foreach ($itemsWeight as $itemName => $weight) {
                             $item = $model->items()->where('name', $itemName)->first();
@@ -167,13 +169,16 @@ class CloseOrder extends Action
         if (count($items)) {
             $itemsWeights = [];
             foreach ($items as $item) {
-                $itemsWeights[$item->name] = $item->pivot->weight;
+                $itemsWeights[$item->name] = [$item->pivot->weight, '1000'];
             }
-            $fields[] = KeyValue::make(__('nova.items_weight'), 'items_weight')
+            $fields[] = KeyTwoValues::make(__('nova.items_weight'), 'items_weight')
                 ->rules('json')
                 ->disableAddingRows()
                 ->disableEditingKeys()
                 ->disableDeletingRows()
+                ->keyLabel(__('nova.name'))
+                ->valueLabel(__('nova.weight') . ' (Kg)')
+                ->value2Label(__('nova.price'))
                 ->default($itemsWeights);
         }
         return $fields;

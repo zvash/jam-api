@@ -25,7 +25,8 @@
         "slash2nl/nova-back-button": "^1.0",
         "techouse/select-auto-complete": "^1.3",
         "titasgailius/search-relations": "^2.0",
-        "milanjam/image-link": "*"
+        "milanjam/image-link": "*",
+        "milanjam/key-two-values": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -58,6 +59,10 @@
         {
             "type": "path",
             "url": "./nova-components/ImageLink"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/KeyTwoValues"
         }
     ],
     "scripts": {

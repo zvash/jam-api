@@ -139,4 +139,5 @@ return [
     'address' => 'آدرس',
     'postal_code' => 'کد پستی',
     'is_default' => 'پیش‌فرض',
+    'weight' => 'وزن',
 ];

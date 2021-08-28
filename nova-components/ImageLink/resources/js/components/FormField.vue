@@ -13,6 +13,7 @@
         <a :target="field.blank ? field.blank : '_self'" :class="field.classes ? field.classes : defaultClasses"
            :href="field.href">
           {{ field.text ? field.text : field.value }}
+
         </a>
       </p>
       <p v-else>&mdash;</p>
@@ -22,7 +23,11 @@
 </template>
 
 <script>
+    import { FormField, HandlesValidationErrors } from 'laravel-nova'
+
     export default {
+        mixins: [HandlesValidationErrors, FormField],
+
         props: ['resource', 'resourceName', 'resourceId', 'field'],
 
         data: () => ({
@@ -32,7 +37,16 @@
                 'text-primary',
                 'font-bold'
             ]
-        })
+        }),
+        methods: {
+            /**
+             * Provide a function that fills a passed FormData object with the
+             * field's internal value attribute.
+             */
+            fill(formData) {
+                // formData.append(this.field.attribute, this.value || '')
+            },
+        },
     }
 </script>
 

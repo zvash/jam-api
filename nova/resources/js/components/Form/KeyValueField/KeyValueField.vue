@@ -50,9 +50,9 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
-import KeyValueItem from '@/components/Form/KeyValueField/KeyValueItem'
-import KeyValueHeader from '@/components/Form/KeyValueField/KeyValueHeader'
-import KeyValueTable from '@/components/Form/KeyValueField/KeyValueTable'
+import KeyValueItem from '@/components/Form/KeyTwoValuesField/KeyValueItem'
+import KeyValueHeader from '@/components/Form/KeyTwoValuesField/KeyValueHeader'
+import KeyValueTable from '@/components/Form/KeyTwoValuesField/KeyValueTable'
 
 function guid() {
   var S4 = function () {

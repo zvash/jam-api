@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import KeyValueItem from '@/components/Form/KeyValueField/KeyValueItem'
-import KeyValueHeader from '@/components/Form/KeyValueField/KeyValueHeader'
-import KeyValueTable from '@/components/Form/KeyValueField/KeyValueTable'
+import KeyValueItem from '@/components/Form/KeyTwoValuesField/KeyValueItem'
+import KeyValueHeader from '@/components/Form/KeyTwoValuesField/KeyValueHeader'
+import KeyValueTable from '@/components/Form/KeyTwoValuesField/KeyValueTable'
 
 export default {
   props: ['resource', 'resourceName', 'resourceId', 'field'],

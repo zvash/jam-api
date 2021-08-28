@@ -287,6 +287,7 @@ class Order extends Resource
             CloseOrder::make()
                 ->confirmButtonText(__('nova.close'))
                 ->cancelButtonText(__('nova.cancel'))
+//                ->withoutConfirmation()
                 ->showOnTableRow()
                 ->canSee(function ($request) {
                     if ($request instanceof ActionRequest) {
