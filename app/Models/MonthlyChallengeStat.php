@@ -35,7 +35,7 @@ class MonthlyChallengeStat extends Model
     {
         $challenge = $this->challenge;
         if ($challenge->goal_amount) {
-            return $this->amount / $challenge->goal_amount;
+            return min($this->amount / $challenge->goal_amount, 1);
         }
         return 0.0;
     }
