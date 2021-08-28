@@ -147,4 +147,6 @@ return [
     'price_change_percent' => 'Price Change Percent',
     'user_sold_orders' => 'User Sold Orders',
     'user_driven_orders' => 'User Driven Orders',
+    'seller_campaign_level' => 'Seller Campaign Level',
+    'driver_campaign_level' => 'Driver Campaign Level',
 ];

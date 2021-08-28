@@ -125,6 +125,12 @@ class User extends Resource
                     return $value . '%';
                 }),
 
+            Text::make(__('nova.seller_campaign_level'), 'seller_campaign_level')
+                ->exceptOnForms(),
+
+            Text::make(__('nova.driver_campaign_level'), 'driver_campaign_level')
+                ->exceptOnForms(),
+
             Password::make(__('nova.password'), 'password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')

@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
+use App\Enums\UserType;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Morilog\Jalali\Jalalian;
 
 /**
  * @property string first_name
@@ -57,6 +60,12 @@ class User extends Authenticatable
         'name',
         'is_admin',
         'is_courier',
+        'seller_campaign_level',
+        'driver_campaign_level',
+        'month_sold_weight',
+        'total_sold_weight',
+        'month_order_transfer_count',
+        'total_order_transfer_count',
     ];
 
     /**
@@ -216,5 +225,97 @@ class User extends Authenticatable
     public function getIsCourierAttribute()
     {
         return $this->isCourier();
+    }
+
+    /**
+     * @return int
+     */
+    public function getSellerCampaignLevelAttribute()
+    {
+        $campaign = Campaign::query()
+            ->where('user_type', UserType::SELLER)
+            ->first();
+        $campaignLevelIds = $campaign->levels()->pluck('id')->all();
+        return UserCampaignLevelPrize::query()
+            ->where('user_id', $this->id)
+            ->whereIn('campaign_level_id', $campaignLevelIds)
+            ->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getDriverCampaignLevelAttribute()
+    {
+        $campaign = Campaign::query()
+            ->where('user_type', UserType::DRIVER)
+            ->first();
+        $campaignLevelIds = $campaign->levels()->pluck('id')->all();
+        return UserCampaignLevelPrize::query()
+            ->where('user_id', $this->id)
+            ->whereIn('campaign_level_id', $campaignLevelIds)
+            ->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMonthSoldWeightAttribute()
+    {
+        $year = Jalalian::now()->getYear();
+        $month = Jalalian::now()->getMonth();
+        $startsAt = (new Jalalian($year, $month, 1))->toCarbon();
+        $nextMonth = (new Jalalian($year, $month, 1))->addMonths(1);
+        $endsAt = (new Jalalian($nextMonth->getYear(), $nextMonth->getMonth(), 1))->toCarbon();
+        return Order::query()
+            ->whereNotNull('final_weight')
+            ->where('status', OrderStatus::FINISHED)
+            ->where('user_id', $this->id)
+            ->where('finished_at', '>=', $startsAt)
+            ->where('finished_at', '<=', $endsAt)
+            ->sum('final_weight');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalSoldWeightAttribute()
+    {
+        return Order::query()
+            ->whereNotNull('final_weight')
+            ->where('status', OrderStatus::FINISHED)
+            ->where('user_id', $this->id)
+            ->sum('final_weight');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMonthOrderTransferCountAttribute()
+    {
+        $year = Jalalian::now()->getYear();
+        $month = Jalalian::now()->getMonth();
+        $startsAt = (new Jalalian($year, $month, 1))->toCarbon();
+        $nextMonth = (new Jalalian($year, $month, 1))->addMonths(1);
+        $endsAt = (new Jalalian($nextMonth->getYear(), $nextMonth->getMonth(), 1))->toCarbon();
+        return Order::query()
+            ->whereNotNull('final_weight')
+            ->where('status', OrderStatus::FINISHED)
+            ->where('driver_id', $this->id)
+            ->where('finished_at', '>=', $startsAt)
+            ->where('finished_at', '<=', $endsAt)
+            ->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalOrderTransferCountAttribute()
+    {
+        return Order::query()
+            ->whereNotNull('final_weight')
+            ->where('status', OrderStatus::FINISHED)
+            ->where('driver_id', $this->id)
+            ->count();
     }
 }
