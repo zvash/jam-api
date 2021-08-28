@@ -145,4 +145,6 @@ return [
     'current_price' => 'Current Price',
     'next_price' => 'Next Price',
     'price_change_percent' => 'Price Change Percent',
+    'user_sold_orders' => 'User Sold Orders',
+    'user_driven_orders' => 'User Driven Orders',
 ];

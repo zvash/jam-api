@@ -145,4 +145,6 @@ return [
     'current_price' => 'قیمت فعلی',
     'next_price' => 'قیمت بعدی',
     'price_change_percent' => 'درصد تغییر قیمت',
+    'user_sold_orders' => 'سفارشهای فروخته شده',
+    'user_driven_orders' => 'سفارشهای حمل شده',
 ];

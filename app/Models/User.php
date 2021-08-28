@@ -60,6 +60,22 @@ class User extends Authenticatable
     ];
 
     /**
+     * @return HasMany
+     */
+    public function soldOrders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function drivenOrders()
+    {
+        return $this->hasMany(Order::class, 'driver_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function monthlyChallengeStats()

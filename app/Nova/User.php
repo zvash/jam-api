@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\UserCampaignLevelPrize;
 use App\Nova\Actions\PromoteToAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\HasMany;
@@ -168,6 +169,10 @@ class User extends Resource
                     'NO' => 'danger'
                 ])
                 ->exceptOnForms(),
+
+            HasMany::make(__('nova.user_sold_orders'), 'soldOrders', Order::class),
+
+            HasMany::make(__('nova.user_driven_orders'), 'drivenOrders', Order::class),
 
             HasMany::make(__('nova.user_campaign_levels'), 'campaignPrizes', UserCampaignLevelPrize::class),
         ];
