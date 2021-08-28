@@ -94,6 +94,8 @@ Route::group(['prefix' => 'v1'], function ($router) {
 
                     $router->get('/all', [ItemController::class, 'getItems']);
 
+                    $router->get('/prices', [ItemController::class, 'prices']);
+
                 });
 
                 $router->group(['prefix' => 'campaigns'], function ($router) {

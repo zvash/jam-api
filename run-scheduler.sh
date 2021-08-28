@@ -6,6 +6,6 @@ do
 
 php /var/www/milanjam/artisan schedule:run --verbose --no-interaction &
 
-sleep 30
+sleep 60
 
 done

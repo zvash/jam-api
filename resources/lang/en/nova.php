@@ -141,4 +141,8 @@ return [
     'is_default' => 'IS Default',
     'weight' => 'Weight',
     'need_admin_action' => 'Needs Admin\'s Action',
+    'update_price_time' => 'Update Price Time',
+    'current_price' => 'Current Price',
+    'next_price' => 'Next Price',
+    'price_change_percent' => 'Price Change Percent',
 ];

@@ -88,6 +88,12 @@ class Item extends Resource
                     return number_format($amount);
                 })
                 ->step(1),
+
+            Currency::make(__('nova.next_price'), 'next_price')
+                ->displayUsing(function($amount){
+                    return $amount ? number_format($amount) : null;
+                })
+                ->step(1),
         ];
     }
 

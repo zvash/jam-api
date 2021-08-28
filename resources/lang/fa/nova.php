@@ -141,4 +141,8 @@ return [
     'is_default' => 'پیش‌فرض',
     'weight' => 'وزن',
     'need_admin_action' => 'نیازمند توجه',
+    'update_price_time' => 'ساعت به‌روزرسانی قیمت‌ها',
+    'current_price' => 'قیمت فعلی',
+    'next_price' => 'قیمت بعدی',
+    'price_change_percent' => 'درصد تغییر قیمت',
 ];

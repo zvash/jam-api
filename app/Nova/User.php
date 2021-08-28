@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 
@@ -64,7 +65,7 @@ class User extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -97,19 +98,31 @@ class User extends Resource
 
             Text::make(__('nova.phone'), 'phone')
                 ->sortable()
-                ->rules('required', 'phone', 'max:254')
+                ->rules('required', 'max:254')
                 ->creationRules('unique:users,phone')
                 ->updateRules('unique:users,phone,{{resourceId}}'),
 
             Text::make(__('nova.email'), 'email')
                 ->sortable()
-                ->rules('email', 'max:254')
+                ->rules('email', 'max:254', 'nullable')
                 ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->updateRules('unique:users,email,{{resourceId}}')
+                ->showOnIndex(false),
 
             Text::make(__('nova.national_code'), 'national_code')
                 ->sortable()
-                ->rules('max:10'),
+                ->rules('max:10', 'nullable', 'min:10')
+                ->showOnIndex(false),
+
+            Number::make(__('nova.price_change_percent'), 'price_change_percent')
+                ->step(0.1)
+                ->default(0)
+                ->min(-100)
+                ->max(100)
+                ->rules('numeric', 'min:-100', 'max:100')
+                ->displayUsing(function ($value) {
+                    return $value . '%';
+                }),
 
             Password::make(__('nova.password'), 'password')
                 ->onlyOnForms()
@@ -163,7 +176,7 @@ class User extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -174,7 +187,7 @@ class User extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -185,7 +198,7 @@ class User extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -196,7 +209,7 @@ class User extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)

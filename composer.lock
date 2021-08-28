@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fcf1d047ad89f7ae90b13b2ea1381cd",
+    "content-hash": "8d09fe7f32bebc72f4e67bb1b94e90c7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2766,6 +2766,51 @@
                 }
             ],
             "time": "2021-07-27T08:17:08+00:00"
+        },
+        {
+            "name": "michielfb/laravel-nova-time-field",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michielfb/laravel-nova-time-field.git",
+                "reference": "b42670e75b8ba043f07e265bf5a41ba382470620"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michielfb/laravel-nova-time-field/zipball/b42670e75b8ba043f07e265bf5a41ba382470620",
+                "reference": "b42670e75b8ba043f07e265bf5a41ba382470620",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Michielfb\\Time\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Michielfb\\Time\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/michielfb/laravel-nova-time-field/issues",
+                "source": "https://github.com/michielfb/laravel-nova-time-field/tree/1.2.1"
+            },
+            "time": "2021-04-02T19:24:14+00:00"
         },
         {
             "name": "milanjam/image-link",
@@ -10216,5 +10261,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
