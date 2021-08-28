@@ -139,5 +139,6 @@ return [
     'address' => 'Address',
     'postal_code' => 'Postal Code',
     'is_default' => 'IS Default',
-    'weight' => '',
+    'weight' => 'Weight',
+    'need_admin_action' => 'Needs Admin\'s Action',
 ];

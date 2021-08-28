@@ -7,6 +7,7 @@ use App\Nova\Actions\AcceptPendingOrder;
 use App\Nova\Actions\CloseOrder;
 use App\Nova\Actions\DeliverOrder;
 use App\Nova\Actions\RejectOrder;
+use App\Nova\Filters\NeedAdminAction;
 use Dpsoft\NovaPersianDate\PersianDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -223,7 +224,9 @@ class Order extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new NeedAdminAction(),
+        ];
     }
 
     /**

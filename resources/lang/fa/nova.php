@@ -140,4 +140,5 @@ return [
     'postal_code' => 'کد پستی',
     'is_default' => 'پیش‌فرض',
     'weight' => 'وزن',
+    'need_admin_action' => 'نیازمند توجه',
 ];
