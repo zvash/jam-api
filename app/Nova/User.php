@@ -70,6 +70,15 @@ class User extends Resource
     }
 
     /**
+     * @param Request $request
+     * @return bool
+     */
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request $request
