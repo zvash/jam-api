@@ -107,6 +107,7 @@ Route::group(['prefix' => 'v1'], function ($router) {
                 $router->group(['prefix' => 'challenges'], function ($router) {
 
                     $router->get('/current/type/{type}/get', [MonthlyChallengeController::class, 'getCurrentChallengeStats']);
+                    $router->get('/archives', [MonthlyChallengeController::class, 'archives']);
 
                 });
 

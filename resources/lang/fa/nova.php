@@ -149,4 +149,12 @@ return [
     'user_driven_orders' => 'سفارشهای حمل شده',
     'seller_campaign_level' => 'مرحله در کمپین فروشندگان',
     'driver_campaign_level' => 'مرحله در کمپین رانندگان',
+    'participants_stats' => 'وضعیت شرکت کنندگان',
+    'points' => 'امتیاز کسب شده',
+    'points_needed' => 'امتیاز مورد نیاز',
+    'has_won' => 'برنده؟',
+    'is_prize_handed_over' => 'آیا جایزه اهدا شده است؟',
+    'prize_hand_over' => 'اهدای جایزه',
+    'response' => 'پاسخ',
+    'close_ticket' => 'بستن تیکت',
 ];

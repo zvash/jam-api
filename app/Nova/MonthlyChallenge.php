@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Line;
 use Laravel\Nova\Fields\Stack;
@@ -30,7 +31,7 @@ class MonthlyChallenge extends Resource
      *
      * @var string
      */
-    public static $title = 'description';
+    public static $title = 'name_with_period';
 
     /**
      * The columns that should be searched.
@@ -164,6 +165,8 @@ class MonthlyChallenge extends Resource
                 __('nova.active') => 'success',
                 __('nova.inactive') => 'warning',
             ]),
+
+            HasMany::make(__('nova.participants_stats'), 'winners', MonthlyChallengeWinner::class),
         ];
     }
 

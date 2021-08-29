@@ -54,6 +54,27 @@ function numberToNth(int $index) {
     return $index . $suffix;
 }
 
+function getMonthName($index) {
+    $months = [
+        1 => 'فر.ردین',
+        2 => 'اردیبهشت',
+        3 => 'خرداد',
+        4 => 'تیر',
+        5 => 'مرداد',
+        6 => 'شهریور',
+        7 => 'مهر',
+        8 => 'آبان',
+        9 => 'آذر',
+        10 => 'دی',
+        11 => 'بهمن',
+        12 => 'اسفند',
+    ];
+    if ($index > 12 || $index < 1) {
+        return '';
+    }
+    return $months[$index];
+}
+
 function float_number_format($value) {
     if (intval(abs($value)) != abs($value)) {
         $floatingPart = preg_replace('/^\d*\./', '', abs($value) . '');

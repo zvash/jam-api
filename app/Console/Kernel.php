@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ProcessDriverAcceptRequests())->everyMinute()
             ->withoutOverlapping(5);
 
-        $schedule->job(new ProcessMonthlyChallengeWinners())->dailyAt('00:05');
+        $schedule->job(new ProcessMonthlyChallengeWinners())->everyMinute();//->dailyAt('00:05');
 
         $schedule->job(new UpdatePriceList())->everyMinute()
             ->withoutOverlapping(5);

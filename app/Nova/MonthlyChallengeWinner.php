@@ -2,29 +2,27 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\CloseTicket;
-use App\Nova\Filters\TicketStatus;
+use App\Nova\Actions\HandOverMonthlyChallengePrize;
 use Illuminate\Http\Request;
-use Khalin\Nova\Field\Link;
-use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Signifly\Nova\Fields\ProgressBar\ProgressBar;
 use Titasgailius\SearchRelations\SearchesRelations;
 
-class Ticket extends Resource
+class MonthlyChallengeWinner extends Resource
 {
     use SearchesRelations;
+
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Ticket::class;
+    public static $model = \App\Models\MonthlyChallengeWinner::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -39,7 +37,17 @@ class Ticket extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'monthly_challenge_id',
+        'user_id',
+    ];
+
+    /**
+     * Default ordering for index query.
+     *
+     * @var array
+     */
+    public static $indexDefaultOrder = [
+        'monthly_challenge_id' => 'desc'
     ];
 
     /**
@@ -51,12 +59,22 @@ class Ticket extends Resource
         'user' => ['first_name', 'last_name', 'phone'],
     ];
 
+    public static $displayInNavigation = false;
+
     /**
-     * @return array|null|string
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function group()
+    public static function indexQuery(NovaRequest $request, $query)
     {
-        return __('nova.users');
+        if (empty($request->get('orderBy'))) {
+            $query->getQuery()->orders = [];
+            return $query->orderBy(key(static::$indexDefaultOrder), reset(static::$indexDefaultOrder));
+        }
+        return $query;
     }
 
     /**
@@ -64,15 +82,7 @@ class Ticket extends Resource
      */
     public static function label()
     {
-        return __('nova.Tickets');
-    }
-
-    /**
-     * @return array|null|string
-     */
-    public static function singularLabel()
-    {
-        return __('nova.Ticket');
+        return __('nova.participants_stats');
     }
 
     /**
@@ -102,6 +112,11 @@ class Ticket extends Resource
         return false;
     }
 
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -113,32 +128,34 @@ class Ticket extends Resource
         return [
             ID::make(__('nova.id'), 'id')->sortable(),
 
+            BelongsTo::make(__('nova.monthly_challenge'), 'challenge', MonthlyChallenge::class),
+
             BelongsTo::make(__('nova.user'), 'user', User::class),
 
-            Text::make(__('nova.phone'), 'phone'),
-
-            Text::make(__('nova.comment'), 'comment')->onlyOnIndex(),
-            Textarea::make(__('nova.comment'), 'comment')->onlyOnDetail(),
-            Text::make(__('nova.response'), 'response')->onlyOnIndex(),
-            Textarea::make(__('nova.response'), 'response')->onlyOnDetail(),
-
-            Link::make(__('nova.image'), 'image_url')
-                ->url(function () {
-                    return "{$this->image_url}";
-                })->text(__('nova.display'))->blank(),
-
-            Image::make(__('nova.image'), 'image')
-                ->disk('public')
-            ->onlyOnDetail(),
-
-            Badge::make(__('nova.status'), 'is_open')
+            Number::make(__('nova.points'), 'points')
                 ->displayUsing(function ($value) {
-                    return $value ? __('nova.open') : __('nova.closed');
-                })
-            ->map([
-                __('nova.open') => 'info',
-                __('nova.closed') => 'success',
-            ])->exceptOnForms()
+                    return float_number_format($value);
+                }),
+
+            Number::make(__('nova.points_needed'), 'points_needed')
+                ->displayUsing(function ($value) {
+                    return float_number_format($value);
+                }),
+
+            BelongsTo::make(__('nova.prize'), 'prize', Prize::class)
+                ->required(),
+
+            Boolean::make(__('nova.has_won'), 'has_won'),
+
+            ProgressBar::make(__('nova.progress'), 'progress')
+                ->options([
+                    'fromColor' => '#FFEA82',
+                    'toColor' => '#40BF55',
+                    'animateColor' => true,
+                ])
+                ->exceptOnForms(),
+
+            Boolean::make(__('nova.handed_over'), 'handed_over'),
         ];
     }
 
@@ -161,9 +178,7 @@ class Ticket extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new TicketStatus(),
-        ];
+        return [];
     }
 
     /**
@@ -186,16 +201,18 @@ class Ticket extends Resource
     public function actions(Request $request)
     {
         return [
-            CloseTicket::make()
-                ->confirmButtonText(__('nova.close_ticket'))
+            HandOverMonthlyChallengePrize::make()
+                ->confirmButtonText(__('nova.yes'))
                 ->cancelButtonText(__('nova.cancel'))
+                ->confirmText(__('nova.is_prize_handed_over'))
                 ->showOnTableRow()
                 ->canSee(function ($request) {
                     if ($request instanceof ActionRequest) {
                         return true;
                     }
-                    return $this->resource instanceof \App\Models\Ticket
-                        && $this->resource->is_open == true;
+                    return $this->resource instanceof \App\Models\MonthlyChallengeWinner
+                        && $this->resource->points >= $this->resource->points_needed
+                        && $this->resource->handed_over == false;
                 }),
         ];
     }

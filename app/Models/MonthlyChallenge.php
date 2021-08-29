@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\GoalType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Morilog\Jalali\Jalalian;
 
 /**
  * @property string goal_type
@@ -15,6 +16,7 @@ class MonthlyChallenge extends Model
 
     protected $appends = [
         'goal',
+        'name_with_period',
     ];
 
     /**
@@ -53,5 +55,14 @@ class MonthlyChallenge extends Model
             return 'فروش ' . $this->goal_amount . ' کیلوگرم';
         }
         return "{$this->goal_amount}";
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameWithPeriodAttribute()
+    {
+        $monthName = getMonthName($this->month);
+        return "{$this->description} ({$monthName} {$this->year})";
     }
 }

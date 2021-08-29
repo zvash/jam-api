@@ -36,4 +36,14 @@ class MonthlyChallengeController extends Controller
             'score' => $score
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function archives(Request $request)
+    {
+        $user = $request->user();
+        return $this->success($user->monthlyChallengesWinnings->load('challenge'));
+    }
 }

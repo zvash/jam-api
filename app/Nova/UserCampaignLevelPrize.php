@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\HandOverMonthlyChallengePrize;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -157,6 +158,19 @@ class UserCampaignLevelPrize extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            HandOverMonthlyChallengePrize::make()
+                ->confirmButtonText(__('nova.yes'))
+                ->cancelButtonText(__('nova.cancel'))
+                ->confirmText(__('nova.is_prize_handed_over'))
+                ->showOnTableRow()
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof \App\Models\UserCampaignLevelPrize
+                        && $this->resource->handed_over == false;
+                }),
+        ];
     }
 }

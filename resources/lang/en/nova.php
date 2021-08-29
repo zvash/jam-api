@@ -149,4 +149,12 @@ return [
     'user_driven_orders' => 'User Driven Orders',
     'seller_campaign_level' => 'Seller Campaign Level',
     'driver_campaign_level' => 'Driver Campaign Level',
+    'participants_stats' => 'Participants Stats',
+    'points' => 'Points',
+    'points_needed' => 'Points Needed',
+    'has_won' => 'Has Won?',
+    'is_prize_handed_over' => 'Is Prize Handed Over',
+    'prize_hand_over' => 'Prize Hand Over',
+    'response' => 'Response',
+    'close_ticket' => 'Close Ticket',
 ];
