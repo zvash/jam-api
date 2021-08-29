@@ -167,4 +167,6 @@ return [
     'user_is_admin' => 'کاربر ادمین است',
     'user_is_driver' => 'کاربر راننده است',
     'user_rank' => 'سطح کاربر',
+    'current_month_challenge_status' => 'وضعیت چالش های ماه جاری',
+    'challenge_type' => 'نوع چالش',
 ];

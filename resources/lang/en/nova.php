@@ -167,4 +167,6 @@ return [
     'user_is_admin' => 'User Is Admin',
     'user_is_driver' => 'User Is Driver',
     'user_rank' => 'User Rank',
+    'current_month_challenge_status' => 'Current Month Challenge Status',
+    'challenge_type' => 'Challenge Type',
 ];

@@ -32,6 +32,7 @@ class VehicleType extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**
@@ -48,7 +49,7 @@ class VehicleType extends Resource
      */
     public static function group()
     {
-        return __('nova.Orders');
+        return __('nova.drivers');
     }
 
     /**

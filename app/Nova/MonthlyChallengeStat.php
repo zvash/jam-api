@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ChallengeType;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -9,6 +10,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Morilog\Jalali\Jalalian;
 use Signifly\Nova\Fields\ProgressBar\ProgressBar;
 use Titasgailius\SearchRelations\SearchesRelations;
 
@@ -86,7 +88,11 @@ class MonthlyChallengeStat extends Resource
      */
     public static function label()
     {
-        return __('nova.monthly_challenges_stats');
+        $month = Jalalian::now()->getMonth();
+        $year = Jalalian::now()->getYear();
+        $monthName = getMonthName($month);
+        $postfix = " ({$monthName} {$year})";
+        return __('nova.current_month_challenge_status') . $postfix;
     }
 
     /**
@@ -168,7 +174,9 @@ class MonthlyChallengeStat extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new ChallengeType(),
+        ];
     }
 
     /**

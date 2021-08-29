@@ -7,9 +7,12 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Techouse\SelectAutoComplete\SelectAutoComplete as Select;
+use Titasgailius\SearchRelations\SearchesRelations;
 
 class Vehicle extends Resource
 {
+    use SearchesRelations;
+
     /**
      * The model the resource corresponds to.
      *
@@ -31,6 +34,17 @@ class Vehicle extends Resource
      */
     public static $search = [
         'id',
+        'owner_full_name',
+        'owner_phone',
+    ];
+
+    /**
+     * The relationship columns that should be searched.
+     *
+     * @var array
+     */
+    public static $searchRelations = [
+        'user' => ['first_name', 'last_name', 'phone'],
     ];
 
     /**
@@ -38,7 +52,7 @@ class Vehicle extends Resource
      */
     public static function group()
     {
-        return __('nova.Orders');
+        return __('nova.drivers');
     }
 
     /**
