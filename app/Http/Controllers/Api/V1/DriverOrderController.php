@@ -8,6 +8,7 @@ use App\Exceptions\OperationNotPossibleException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Http\Requests\UploadSingleImageRequest;
+use App\Jobs\ProcessDriverAcceptRequests;
 use App\Models\DriverAcceptOrder;
 use App\Models\Order;
 use App\Repositories\OrderRepository;
@@ -49,6 +50,13 @@ class DriverOrderController extends Controller
         $inputs['driver_id'] = $user->id;
         DriverAcceptOrder::query()
             ->firstOrCreate($inputs);
+        $currentRecordCount = DriverAcceptOrder::query()
+            ->where('order_id', $inputs['order_id'])
+            ->count();
+        if ($currentRecordCount == 1) {
+            $this->dispatchSync(new ProcessDriverAcceptRequests());
+            return $this->success(['message' => __('messages.success.driver_order_registered_successfully')]);
+        }
         return $this->success(['message' => __('messages.success.driver_order_registered')]);
     }
 

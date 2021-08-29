@@ -120,6 +120,9 @@ class CheckCampaignMilestones
             ->where('milestone', $ordersCount)
             ->first();
 
+        if (! $level) {
+            return;
+        }
 
         if (
         UserCampaignLevelPrize::query()

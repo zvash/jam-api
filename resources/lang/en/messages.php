@@ -39,5 +39,6 @@ return [
         'driver_order_registered' => 'Order acceptance request will be processed within few moment.',
         'order_accepted_by_you' => 'Order is successfully accepted by you.',
         'order_was_taken' => 'Order is taken by another driver before you.',
+        'driver_order_registered_successfully' => 'You successfully accepted the order',
     ],
 ];
