@@ -163,4 +163,8 @@ return [
     'expire_date' => 'تاریخ انقضا',
     'document_type' => 'نوع مدرک',
     'is_valid' => 'معتبر',
+    'choose_user_type' => 'انتخاب نوع کاربر',
+    'user_is_admin' => 'کاربر ادمین است',
+    'user_is_driver' => 'کاربر راننده است',
+    'user_rank' => 'سطح کاربر',
 ];

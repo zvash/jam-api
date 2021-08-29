@@ -163,4 +163,8 @@ return [
     'expire_date' => 'Expire Date',
     'document_type' => 'Document Type',
     'is_valid' => 'Is Valid',
+    'choose_user_type' => 'Choose User Type',
+    'user_is_admin' => 'User Is Admin',
+    'user_is_driver' => 'User Is Driver',
+    'user_rank' => 'User Rank',
 ];

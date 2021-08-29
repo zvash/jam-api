@@ -66,6 +66,7 @@ class User extends Authenticatable
         'total_sold_weight',
         'month_order_transfer_count',
         'total_order_transfer_count',
+        'rank',
     ];
 
     /**
@@ -325,5 +326,16 @@ class User extends Authenticatable
             ->where('status', OrderStatus::FINISHED)
             ->where('driver_id', $this->id)
             ->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getRankAttribute()
+    {
+        if ($this->isCourier()) {
+            return $this->getDriverCampaignLevelAttribute();
+        }
+        return $this->getSellerCampaignLevelAttribute();
     }
 }

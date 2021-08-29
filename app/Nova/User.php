@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ChooseUserType;
 use App\Nova\UserCampaignLevelPrize;
 use App\Nova\Actions\PromoteToAdmin;
 use Illuminate\Http\Request;
@@ -126,9 +127,14 @@ class User extends Resource
                 }),
 
             Text::make(__('nova.seller_campaign_level'), 'seller_campaign_level')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->showOnIndex(false),
 
             Text::make(__('nova.driver_campaign_level'), 'driver_campaign_level')
+                ->exceptOnForms()
+                ->showOnIndex(false),
+
+            Text::make(__('nova.user_rank'), 'rank')
                 ->exceptOnForms(),
 
             Password::make(__('nova.password'), 'password')
@@ -174,7 +180,8 @@ class User extends Resource
                     'YES' => 'success',
                     'NO' => 'danger'
                 ])
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->showOnIndex(false),
 
             HasMany::make(__('nova.documents'), 'documents', Document::class),
 
@@ -230,10 +237,8 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
-            PromoteToAdmin::make()
-                ->confirmButtonText(__('nova.yes'))
-                ->cancelButtonText(__('nova.cancel'))
-                ->confirmText(__('nova.promote_user_confirm_text'))
+            ChooseUserType::make()
+                ->setModel($this->resource)
                 ->showOnTableRow()
         ];
     }
