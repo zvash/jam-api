@@ -49,8 +49,8 @@ class CloseOrder extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param  \Laravel\Nova\Fields\ActionFields $fields
+     * @param  \Illuminate\Support\Collection $models
      * @return mixed
      */
     public function handle(ActionFields $fields, Collection $models)
@@ -89,14 +89,16 @@ class CloseOrder extends Action
 
                 if (array_key_exists('items_weight', $parameters)) {
                     $itemsWeight = json_decode($parameters['items_weight']);
-                    dd($itemsWeight);
                     if ($itemsWeight) {
-                        foreach ($itemsWeight as $itemName => $weight) {
-                            $item = $model->items()->where('name', $itemName)->first();
+                        foreach ($itemsWeight as $record) {
+                            $item = $model->items()->where('name', $record->key)->first();
                             OrderItem::query()
                                 ->where('order_id', $model->id)
                                 ->where('item_id', $item->id)
-                                ->update(['weight' => $weight]);
+                                ->update([
+                                    'weight' => $record->value,
+                                    'price' => $record->value2,
+                                ]);
                         }
                     }
                 }
@@ -169,7 +171,7 @@ class CloseOrder extends Action
         if (count($items)) {
             $itemsWeights = [];
             foreach ($items as $item) {
-                $itemsWeights[$item->name] = [$item->pivot->weight, '1000'];
+                $itemsWeights[$item->name] = [$item->pivot->weight, $item->pivot->price];
             }
             $fields[] = KeyTwoValues::make(__('nova.items_weight'), 'items_weight')
                 ->rules('json')

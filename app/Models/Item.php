@@ -26,7 +26,7 @@ class Item extends Model
      */
     public function orders()
     {
-        return $this->belongsToMany(Order::class, OrderItem::class)->withPivot('weight');
+        return $this->belongsToMany(Order::class, OrderItem::class)->withPivot('weight', 'price');
     }
 
     /**
