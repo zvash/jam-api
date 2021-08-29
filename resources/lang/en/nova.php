@@ -157,4 +157,10 @@ return [
     'prize_hand_over' => 'Prize Hand Over',
     'response' => 'Response',
     'close_ticket' => 'Close Ticket',
+    'documents' => 'Documents',
+    'document' => 'Document',
+    'number' => 'Number',
+    'expire_date' => 'Expire Date',
+    'document_type' => 'Document Type',
+    'is_valid' => 'Is Valid',
 ];

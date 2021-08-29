@@ -157,4 +157,10 @@ return [
     'prize_hand_over' => 'اهدای جایزه',
     'response' => 'پاسخ',
     'close_ticket' => 'بستن تیکت',
+    'documents' => 'مدارک',
+    'document' => 'مدرک',
+    'number' => 'شماره',
+    'expire_date' => 'تاریخ انقضا',
+    'document_type' => 'نوع مدرک',
+    'is_valid' => 'معتبر',
 ];

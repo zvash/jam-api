@@ -176,6 +176,8 @@ class User extends Resource
                 ])
                 ->exceptOnForms(),
 
+            HasMany::make(__('nova.documents'), 'documents', Document::class),
+
             HasMany::make(__('nova.user_sold_orders'), 'soldOrders', Order::class),
 
             HasMany::make(__('nova.user_driven_orders'), 'drivenOrders', Order::class),
