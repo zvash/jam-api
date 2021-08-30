@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Morilog\Jalali\Jalalian;
 use Titasgailius\SearchRelations\SearchesRelations;
 
 class MonthlyChallenge extends Resource
@@ -62,8 +63,8 @@ class MonthlyChallenge extends Resource
     /**
      * Build an "index" query for the given resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function indexQuery(NovaRequest $request, $query)
@@ -123,12 +124,12 @@ class MonthlyChallenge extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
     {
-        return [
+        $fields = [
             ID::make(__('nova.id'), 'id')->sortable(),
 
             Text::make(__('nova.year'), 'year')->sortable(),
@@ -152,28 +153,40 @@ class MonthlyChallenge extends Resource
                     $key = 'nova.' . $value;
                     return __($key);
                 })
-            ->map([
-                __('nova.drivers') => 'info',
-                __('nova.sellers') => 'info',
-            ]),
+                ->map([
+                    __('nova.drivers') => 'info',
+                    __('nova.sellers') => 'info',
+                ]),
 
             Badge::make(__('nova.status'), 'is_active')
                 ->displayUsing(function ($value) {
                     return $value ? __('nova.active') : __('nova.inactive');
                 })
-            ->map([
-                __('nova.active') => 'success',
-                __('nova.inactive') => 'warning',
-            ]),
+                ->map([
+                    __('nova.active') => 'success',
+                    __('nova.inactive') => 'warning',
+                ]),
 
             HasMany::make(__('nova.participants_stats'), 'winners', MonthlyChallengeWinner::class),
+
+            HasMany::make(__('nova.participants_stats'), 'stats', MonthlyChallengeStat::class),
         ];
+        $now = Jalalian::now();
+        $month = $now->getMonth();
+        $year = $now->getYear();
+        $lastIndex = count($fields) - 1;
+        if ($this->resource->month == $month && $this->resource->year == $year) {
+            $fields[$lastIndex - 1]->hideFromDetail();
+        } else {
+            $fields[$lastIndex]->hideFromDetail();
+        }
+        return $fields;
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -184,7 +197,7 @@ class MonthlyChallenge extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -195,7 +208,7 @@ class MonthlyChallenge extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -206,7 +219,7 @@ class MonthlyChallenge extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)
