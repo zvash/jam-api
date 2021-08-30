@@ -205,6 +205,8 @@ class User extends Resource
 
             HasMany::make(__('nova.user_campaign_levels'), 'campaignPrizes', UserCampaignLevelPrize::class),
 
+            HasMany::make(__('nova.state_in_current_month_challenge'), 'monthlyChallengeStats', MonthlyChallengeStat::class),
+
             HasMany::make(__('nova.monthly_challenges_stats'), 'monthlyChallengesWinnings', MonthlyChallengeWinner::class),
         ];
     }

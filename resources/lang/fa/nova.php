@@ -169,4 +169,5 @@ return [
     'user_rank' => 'سطح کاربر',
     'current_month_challenge_status' => 'وضعیت چالش های ماه جاری',
     'challenge_type' => 'نوع چالش',
+    'state_in_current_month_challenge' => 'وضعیت در چالش ماه جاری',
 ];
