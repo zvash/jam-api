@@ -86,7 +86,7 @@ class User extends Resource
      */
     public function fields(Request $request)
     {
-        return [
+        $fields = [
             ID::make(__('nova.id'), 'id')->sortable(),
 
             Avatar::make(__('nova.image'), 'avatar')
@@ -209,6 +209,24 @@ class User extends Resource
 
             HasMany::make(__('nova.monthly_challenges_stats'), 'monthlyChallengesWinnings', MonthlyChallengeWinner::class),
         ];
+
+        if ($this->resource->isCourier() && $this->resource->isSeller()) {
+            //pass
+        } else if ($this->resource->isCourier()) {
+            $fields[18]->hideFromDetail();
+        } else if ($this->resource->isSeller()){
+            $fields[17]->hideFromDetail();
+            $fields[19]->hideFromDetail();
+        } else {
+            $fields[17]->hideFromDetail();
+            $fields[18]->hideFromDetail();
+            $fields[19]->hideFromDetail();
+            $fields[20]->hideFromDetail();
+            $fields[21]->hideFromDetail();
+            $fields[22]->hideFromDetail();
+        }
+
+        return $fields;
     }
 
     /**
