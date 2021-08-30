@@ -170,4 +170,5 @@ return [
     'current_month_challenge_status' => 'Current Month Challenge Status',
     'challenge_type' => 'Challenge Type',
     'state_in_current_month_challenge' => 'State In Current Monthly Challenge',
+    'user_is_seller' => 'User Is Seller',
 ];

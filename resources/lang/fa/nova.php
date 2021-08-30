@@ -163,11 +163,12 @@ return [
     'expire_date' => 'تاریخ انقضا',
     'document_type' => 'نوع مدرک',
     'is_valid' => 'معتبر',
-    'choose_user_type' => 'انتخاب نوع کاربر',
+    'choose_user_type' => 'تعیین نوع کاربر',
     'user_is_admin' => 'کاربر ادمین است',
     'user_is_driver' => 'کاربر راننده است',
     'user_rank' => 'سطح کاربر',
     'current_month_challenge_status' => 'وضعیت چالش های ماه جاری',
     'challenge_type' => 'نوع چالش',
     'state_in_current_month_challenge' => 'وضعیت در چالش ماه جاری',
+    'user_is_seller' => 'کاربر فروشنده است',
 ];

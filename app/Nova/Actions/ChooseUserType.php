@@ -76,10 +76,16 @@ class ChooseUserType extends Action
     {
         $isAdmin = $this->model->isAdmin();
         $isDriver = $this->model->isCourier();
+        $isSeller = $this->model->isSeller();
 
         return [
             Boolean::make(__('nova.user_is_admin'), 'is_admin')->default($isAdmin),
             Boolean::make(__('nova.user_is_driver'), 'is_driver')->default($isDriver),
+            Boolean::make(__('nova.user_is_seller'), 'is_seller')
+                ->withMeta(['extraAttributes' => [
+                    'readonly' => true
+                ]])
+                ->default($isSeller),
         ];
     }
 }
