@@ -524,6 +524,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -553,6 +557,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     __WEBPACK_IMPORTED_MODULE_0_autosize___default()(this.$refs.keyField);
     __WEBPACK_IMPORTED_MODULE_0_autosize___default()(this.$refs.valueField);
     __WEBPACK_IMPORTED_MODULE_0_autosize___default()(this.$refs.value2Field);
+
+    if (this.item.value2) {
+      this.item.value2 = numberWithCommas(replaceCommas(this.item.value2));
+    }
+    if (this.item.value) {
+      this.item.value = numberWithCommas(replaceCommas(this.item.value));
+    }
   },
 
 
@@ -565,6 +576,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     handleValue2FieldFocus: function handleValue2FieldFocus() {
       this.$refs.value2Field.select();
+    },
+    valueCurrencyFormat: function valueCurrencyFormat() {
+      this.item.value = numberWithCommas(replaceCommas(this.item.value));
+    },
+    value2CurrencyFormat: function value2CurrencyFormat() {
+      this.item.value2 = numberWithCommas(replaceCommas(this.item.value2));
+    },
+
+
+    isNumber: function isNumber(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
     }
   },
 
@@ -577,6 +605,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   }
 });
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function replaceCommas(x) {
+  return x.toString().replace(/,/g, '');
+}
 
 /***/ }),
 /* 9 */
@@ -963,6 +999,8 @@ var render = function() {
                   domProps: { value: _vm.item.value },
                   on: {
                     focus: _vm.handleValueFieldFocus,
+                    keyup: _vm.valueCurrencyFormat,
+                    keypress: _vm.isNumber,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -1005,6 +1043,8 @@ var render = function() {
                   domProps: { value: _vm.item.value2 },
                   on: {
                     focus: _vm.handleValue2FieldFocus,
+                    keyup: _vm.value2CurrencyFormat,
+                    keypress: _vm.isNumber,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -1436,6 +1476,11 @@ function guid() {
      * field's internal value attribute.
      */
     fill: function fill(formData) {
+      console.log(this.theData);
+      for (var index in this.theData) {
+        this.theData[index].value = replaceCommas(this.theData[index].value);
+        this.theData[index].value2 = replaceCommas(this.theData[index].value2);
+      }
       formData.append(this.field.attribute, JSON.stringify(this.theData));
     },
 
@@ -1500,6 +1545,10 @@ function guid() {
     }
   }
 });
+
+function replaceCommas(x) {
+  return x.toString().replace(/,/g, '');
+}
 
 /***/ }),
 /* 18 */

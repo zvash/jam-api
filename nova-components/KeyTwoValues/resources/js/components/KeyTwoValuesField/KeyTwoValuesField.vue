@@ -101,6 +101,11 @@ export default {
      * field's internal value attribute.
      */
     fill(formData) {
+      console.log(this.theData);
+      for (var index in this.theData) {
+          this.theData[index].value = replaceCommas(this.theData[index].value);
+          this.theData[index].value2 = replaceCommas(this.theData[index].value2);
+      }
       formData.append(this.field.attribute, JSON.stringify(this.theData))
     },
 
@@ -153,5 +158,9 @@ export default {
         .value()
     },
   },
+}
+
+function replaceCommas(x) {
+    return x.toString().replace(/,/g, '');
 }
 </script>

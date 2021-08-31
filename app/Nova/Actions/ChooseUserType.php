@@ -85,7 +85,8 @@ class ChooseUserType extends Action
                 ->withMeta(['extraAttributes' => [
                     'readonly' => true
                 ]])
-                ->default($isSeller),
+                ->default($isSeller)
+                ->help(__('nova.auth_seller_box')),
         ];
     }
 }

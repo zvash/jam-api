@@ -171,4 +171,5 @@ return [
     'challenge_type' => 'Challenge Type',
     'state_in_current_month_challenge' => 'State In Current Monthly Challenge',
     'user_is_seller' => 'User Is Seller',
+    'auth_seller_box' => 'After registering the first order this box will be checked automatically',
 ];

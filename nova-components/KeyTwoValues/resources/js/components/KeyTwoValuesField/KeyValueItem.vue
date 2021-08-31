@@ -26,6 +26,8 @@
           :dusk="`key-value-value-${index}`"
           v-model="item.value"
           @focus="handleValueFieldFocus"
+          @keyup="valueCurrencyFormat"
+          @keypress="isNumber"
           ref="valueField"
           type="text"
           class="font-mono text-sm block min-h-input w-full form-control form-input form-input-row py-4 text-90"
@@ -42,6 +44,8 @@
                 :dusk="`key-value-value2-${index}`"
                 v-model="item.value2"
                 @focus="handleValue2FieldFocus"
+                @keyup="value2CurrencyFormat"
+                @keypress="isNumber"
                 ref="value2Field"
                 type="text"
                 class="font-mono text-sm block min-h-input w-full form-control form-input form-input-row py-4 text-90"
@@ -99,9 +103,16 @@ export default {
   },
 
   mounted() {
-    autosize(this.$refs.keyField)
-    autosize(this.$refs.valueField)
-    autosize(this.$refs.value2Field)
+    autosize(this.$refs.keyField);
+    autosize(this.$refs.valueField);
+    autosize(this.$refs.value2Field);
+
+    if(this.item.value2) {
+        this.item.value2 = numberWithCommas(replaceCommas(this.item.value2));
+    }
+    if (this.item.value) {
+        this.item.value = numberWithCommas(replaceCommas(this.item.value));
+    }
   },
 
   methods: {
@@ -116,6 +127,24 @@ export default {
     handleValue2FieldFocus() {
         this.$refs.value2Field.select()
     },
+
+    valueCurrencyFormat() {
+        this.item.value = numberWithCommas(replaceCommas(this.item.value));
+    },
+
+    value2CurrencyFormat() {
+        this.item.value2 = numberWithCommas(replaceCommas(this.item.value2));
+    },
+
+    isNumber: function(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+            evt.preventDefault();
+        } else {
+            return true;
+        }
+    }
   },
 
   computed: {
@@ -126,5 +155,13 @@ export default {
       return !this.readOnly && !this.disabled
     },
   },
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function replaceCommas(x) {
+    return x.toString().replace(/,/g, '');
 }
 </script>
