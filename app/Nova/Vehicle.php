@@ -114,7 +114,7 @@ class Vehicle extends Resource
 
             Text::make(__('nova.plate_number'), 'plate_number')
                 ->sortable()
-                ->rules('required', 'max:8', 'min:8')
+                ->rules('required', 'max:9', 'min:8')
                 ->creationRules('unique:vehicles,plate_number')
                 ->updateRules('unique:vehicles,plate_number,{{resourceId}}'),
 
