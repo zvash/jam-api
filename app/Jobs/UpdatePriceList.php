@@ -32,6 +32,7 @@ class UpdatePriceList implements ShouldQueue
                     ->create([
                         'item_id' => $item->id,
                         'price' => $item->price,
+                        'change_date' => $item->updated_at,
                     ]);
                 if ($item->next_price) {
                     $item->last_price = $item->price;

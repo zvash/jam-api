@@ -173,4 +173,7 @@ return [
     'user_is_seller' => 'User Is Seller',
     'auth_seller_box' => 'After registering the first order this box will be checked automatically',
     'company' => 'Company',
+    'change_date' => 'Change Date',
+    'price_history' => 'Price History',
+    'change_time' => 'Change Time',
 ];

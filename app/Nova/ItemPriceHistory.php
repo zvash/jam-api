@@ -2,30 +2,31 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\UpdatePriceList;
+use Dpsoft\NovaPersianDate\PersianDate;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Morilog\Jalali\Jalalian;
 
-class Item extends Resource
+class ItemPriceHistory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Item::class;
+    public static $model = \App\Models\ItemPriceHistory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,6 +35,7 @@ class Item extends Resource
      */
     public static $search = [
         'id',
+        'change_date'
     ];
 
     /**
@@ -49,7 +51,7 @@ class Item extends Resource
      */
     public static function label()
     {
-        return __('nova.items');
+        return __('nova.price_history');
     }
 
     /**
@@ -57,32 +59,48 @@ class Item extends Resource
      */
     public static function singularLabel()
     {
-        return __('nova.item');
+        return __('nova.price_history');
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function authorizedToUpdate(Request $request)
+    {
+        return $request instanceof ActionRequest;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
     }
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('nova.id'), 'id')->sortable(),
 
-            Text::make(__('nova.name'), 'name')
-                ->rules('required')
-                ->creationRules('unique:items,name')
-                ->updateRules('unique:items,name,{{resourceId}}'),
-
-            Image::make(__('nova.image'), 'image')
-                ->disk('public')
-                ->path('items')
-                ->prunable()
-                ->deletable()
-                ->nullable()
-                ->rules('nullable', 'mimes:jpeg,jpg,png'),
+            BelongsTo::make(__('nova.name'), 'item', Item::class),
 
             Currency::make(__('nova.price'), 'price')
                 ->displayUsing(function($amount){
@@ -90,20 +108,23 @@ class Item extends Resource
                 })
                 ->step(1),
 
-            Currency::make(__('nova.next_price'), 'next_price')
-                ->displayUsing(function($amount){
-                    return $amount ? number_format($amount) : null;
-                })
-                ->step(1),
+            PersianDate::make(__('nova.change_date'), 'change_date'),
 
-            HasMany::make(__('nova.price_history'), 'priceHistory', ItemPriceHistory::class),
+            Text::make(__('nova.change_time'), 'change_date')
+                ->displayUsing(function($value) {
+                    if ($value) {
+                        return $value->format('H:i:s');
+                    }
+                    return null;
+                }),
+
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function cards(Request $request)
@@ -114,7 +135,7 @@ class Item extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function filters(Request $request)
@@ -125,7 +146,7 @@ class Item extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function lenses(Request $request)
@@ -136,14 +157,11 @@ class Item extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function actions(Request $request)
     {
-        return [
-            UpdatePriceList::make()
-                ->standalone(),
-        ];
+        return [];
     }
 }
