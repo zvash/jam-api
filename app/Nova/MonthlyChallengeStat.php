@@ -138,12 +138,20 @@ class MonthlyChallengeStat extends Resource
         return [
             BelongsTo::make(__('nova.monthly_challenge'), 'challenge', MonthlyChallenge::class),
 
-            BelongsTo::make(__('nova.user'), 'user', User::class),
-
-            Number::make(__('nova.amount'), 'amount')
+            Number::make(__('nova.points'), 'amount')
                 ->displayUsing(function ($value) {
                     return float_number_format($value);
                 }),
+
+            Number::make(__('nova.points_needed'), 'goal_amount')
+                ->displayUsing(function ($value) {
+                    return float_number_format($value);
+                }),
+
+            BelongsTo::make(__('nova.prize'), 'prize', Prize::class),
+
+            BelongsTo::make(__('nova.user'), 'user', User::class),
+
 
             ProgressBar::make(__('nova.progress'), 'progress')
                 ->options([

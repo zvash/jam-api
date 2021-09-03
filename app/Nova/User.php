@@ -102,6 +102,9 @@ class User extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
+            Text::make(__('nova.company'), 'company')
+                ->sortable(),
+
             Text::make(__('nova.first_name'), 'first_name')
                 ->sortable()
                 ->rules('required', 'max:255')
@@ -149,6 +152,7 @@ class User extends Resource
                 ->showOnIndex(false),
 
             Text::make(__('nova.user_rank'), 'rank')
+                ->sortable()
                 ->exceptOnForms(),
 
             Password::make(__('nova.password'), 'password')

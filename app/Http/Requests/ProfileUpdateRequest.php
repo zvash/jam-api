@@ -16,6 +16,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         $pattern = '/^[\pL\pM\s-]+$/u';
         return [
+            'company' => 'filled|min:2:max:250|regex:' . $pattern,
             'first_name' => 'filled|min:2:max:50|regex:' . $pattern,
             'last_name' => 'filled|min:3|max:50|regex:' . $pattern,
             'email' => 'filled|email:rfc|unique:users,email,'. $this->user()->id . ',id',

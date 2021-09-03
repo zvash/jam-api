@@ -23,6 +23,14 @@ class MonthlyChallengeStat extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function prize()
+    {
+        return $this->belongsTo(Prize::class, 'prize_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

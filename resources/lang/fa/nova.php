@@ -172,4 +172,5 @@ return [
     'state_in_current_month_challenge' => 'وضعیت در چالش ماه جاری',
     'user_is_seller' => 'کاربر فروشنده است',
     'auth_seller_box' => 'پس از ثبت اولین سفارش توسط کاربر این قسمت به صورت خودکار انتخاب خواهد شد.',
+    'company' => 'شرکت',
 ];
