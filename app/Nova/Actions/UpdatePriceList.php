@@ -39,8 +39,13 @@ class UpdatePriceList extends Action
         $updatePriceTime = $fields->update_price_time;
         $prices = $fields->price_list;
         foreach ($prices as $price) {
-            Item::query()->where('name', $price['key'])
-                ->update(['price' => $price['value'], 'next_price' => $price['value2']]);
+            $item = Item::query()->where('name', $price['key'])->first();
+            if ($item) {
+                $item->timestamps = false;
+                $item->price = $price['value'];
+                $item->next_price = $price['value2'];
+                $item->save();
+            }
         }
         $config = Config::where('key', 'update_price_time')->first();
         if ($config) {
@@ -83,7 +88,7 @@ class UpdatePriceList extends Action
                 ->keyLabel(__('nova.name'))
                 ->valueLabel(__('nova.current_price'))
                 ->value2Label(__('nova.next_price'))
-                ->default(function() use ($pricesByName) {
+                ->default(function () use ($pricesByName) {
                     return $pricesByName;
                 }),
         ];
