@@ -40,5 +40,6 @@ return [
         'order_accepted_by_you' => 'این سفارش پیش از این با موفقیت به شما اختصاص داده شده است.',
         'order_was_taken' => 'این سفارش پیش از شما توسط فرد دیگری پذیرفته شده است.',
         'driver_order_registered_successfully' => 'شما این سفارش را با موفقیت قبول کردید',
+        'successfully_registered' => 'کد فعال سازی شما :activationCode است',
     ],
 ];

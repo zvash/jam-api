@@ -40,5 +40,6 @@ return [
         'order_accepted_by_you' => 'Order is successfully accepted by you.',
         'order_was_taken' => 'Order is taken by another driver before you.',
         'driver_order_registered_successfully' => 'You successfully accepted the order',
+        'successfully_registered' => 'Your activation code is :activationCode',
     ],
 ];

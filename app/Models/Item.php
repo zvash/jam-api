@@ -30,6 +30,14 @@ class Item extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function priceHistory()
+    {
+        return $this->hasMany(ItemPriceHistory::class);
+    }
+
+    /**
      * @return float|int|mixed
      */
     public function getUserPriceAttribute()

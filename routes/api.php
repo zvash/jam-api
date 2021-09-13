@@ -42,6 +42,7 @@ Route::group(['prefix' => 'v1'], function ($router) {
             $router->group(['middleware' => 'throttle:1,2'], function ($router) {
                 $router->post('/password/forgot/code', [UserController::class, 'sendForgotPasswordRecoveryCode']);
                 $router->post('/password/forgot/reset', [UserController::class, 'resetPasswordUsingRecoveryCode']);
+                $router->post('/password/forgot/verify', [UserController::class, 'verifyResetPasswordActivationCode']);
             });
 
 //            $router->get('/verify/{user}', 'VerificationController@verify')->name('verification.verify');

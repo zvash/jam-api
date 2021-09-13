@@ -11,6 +11,7 @@ use App\Http\Requests\PhoneVerificationRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\ResetPasswordByCodeRequest;
+use App\Http\Requests\VerifyActivationCodeRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Traits\Passport\PassportToken;
@@ -87,6 +88,21 @@ class UserController extends Controller
     {
         $inputs = $request->validated();
         return $this->success($repository->sendForgotPasswordRecoveryCode($inputs['phone']));
+    }
+
+    /**
+     * @param VerifyActivationCodeRequest $request
+     * @param UserRepository $repository
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function verifyResetPasswordActivationCode(VerifyActivationCodeRequest $request, UserRepository $repository)
+    {
+        $inputs = $request->validated();
+        $activationCode = $repository->getActivationCode($inputs['phone'], $inputs['code']);
+        if (!$activationCode) {
+            return $this->failWithCode(__('messages.error.invalid_recovery_code'), ErrorCodes::INVALID_RECOVERY_CODE);
+        }
+        return $this->success(['message' => 'ok']);
     }
 
     /**

@@ -339,4 +339,14 @@ class User extends Authenticatable
         }
         return $this->getSellerCampaignLevelAttribute();
     }
+
+    /**
+     * @param $driver
+     * @param $notification
+     * @return string
+     */
+    public function routeNotificationForKavenegar($driver, $notification = null)
+    {
+        return $this->phone;
+    }
 }
