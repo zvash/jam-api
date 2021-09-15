@@ -42,9 +42,14 @@ class ActivationCode extends Model
 
     public function send()
     {
-        $sender = env('KAVENEGAR_SEND_NUMBER');
-        $message = __('messages.success.successfully_registered', ['activationCode' => $this->code]);
-        $receptor = [$this->phone];
-        $result = \Kavenegar::Send($sender,$receptor,$message);
+        try {
+            $sender = env('KAVENEGAR_SEND_NUMBER');
+            $message = __('messages.success.successfully_registered', ['activationCode' => $this->code]);
+            $receptor = [$this->phone];
+            $result = \Kavenegar::Send($sender,$receptor,$message);
+        } catch (\Exception $exception) {
+
+        }
+
     }
 }
