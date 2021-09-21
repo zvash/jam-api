@@ -21,9 +21,9 @@ class LocationRepository extends BaseRepository
     {
         $maxLocations = env('USER_MAX_LOCATION', 4);
         if ($user->locations()->count() >= $maxLocations) {
-            throw new UserReachedMaxLocationsException(__('messages.error.max_locations'), [
+            throw new UserReachedMaxLocationsException(__('messages.error.max_locations', [
                 'maxAddressCount' => $maxLocations
-            ]);
+            ]));
         }
         $inputs['user_id'] = $user->id;
         $county = County::find($inputs['county_id']);
