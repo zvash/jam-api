@@ -37,8 +37,8 @@ class OrderRepository extends BaseRepository
     {
         $user = $request->user();
         $inputs = $request->validated();
-//        DB::beginTransaction();
-//        try {
+        DB::beginTransaction();
+        try {
             $inputs['user_id'] = $user->id;
             $inputs['status'] = OrderStatus::PENDING;
 
@@ -85,11 +85,10 @@ class OrderRepository extends BaseRepository
                 ->with('images')
                 ->where('id', $order->id)
                 ->first();
-//        } catch (\Exception $exception) {
-//            DB::rollBack();
-            //throw new OrderCreationError(__('messages.error.order_creation_error'));
-//            throw new OrderCreationError($exception->getMessage());
-//        }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw new OrderCreationError(__('messages.error.order_creation_error'));
+        }
     }
 
     /**
