@@ -14,7 +14,7 @@ return [
         'phone_already_verified' => 'شماره تلفن شما قبلا تأیید شده است.',
         'phone_number_invalid' => 'شماره تلفن داده شده نامعتبر است.',
         'wrong_password' => 'کلمه عبور وارد شده صحیح نیست.',
-        'max_locations' => 'امکان تعریف بیش از :maxAddressCount وجود ندارد.',
+        'max_locations' => 'امکان تعریف بیش از :maxAddressCount آدرس وجود ندارد.',
         'content_was_not_found' => 'هیچ موردی پیدا نشد.',
         'order_creation_error' => 'بروز خطا هنگام ثبت سفارش جدید.',
         'operation_is_not_permitted' => 'عدم وجود دسترسیهای لازم برای انجام عملیات.',

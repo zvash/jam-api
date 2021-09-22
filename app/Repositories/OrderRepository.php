@@ -87,7 +87,8 @@ class OrderRepository extends BaseRepository
                 ->first();
         } catch (\Exception $exception) {
             DB::rollBack();
-            throw new OrderCreationError(__('messages.error.order_creation_error'));
+            //throw new OrderCreationError(__('messages.error.order_creation_error'));
+            throw new OrderCreationError($exception->getMessage());
         }
     }
 
