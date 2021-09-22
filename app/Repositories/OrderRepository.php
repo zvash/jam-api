@@ -54,17 +54,17 @@ class OrderRepository extends BaseRepository
                 $user->roles()->attach($sellerRole->id);
             }
 
-            if ($request->hasFile('images')) {
-                $files = $request->file('images');
-                foreach ($files as $file) {
-                    $path = $this->saveFile($file, 'orders');
-                    OrderImage::query()
-                        ->create([
-                            'order_id' => $order->id,
-                            'image' => $path
-                        ]);
-                }
-            }
+//            if ($request->hasFile('images')) {
+//                $files = $request->file('images');
+//                foreach ($files as $file) {
+//                    $path = $this->saveFile($file, 'orders');
+//                    OrderImage::query()
+//                        ->create([
+//                            'order_id' => $order->id,
+//                            'image' => $path
+//                        ]);
+//                }
+//            }
 
             if (array_key_exists('items', $inputs)) {
                 $inputItems = $inputs['items'];
