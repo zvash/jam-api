@@ -54,30 +54,30 @@ class OrderRepository extends BaseRepository
                 $user->roles()->attach($sellerRole->id);
             }
 
-//            if ($request->hasFile('images')) {
-//                $files = $request->file('images');
-//                foreach ($files as $file) {
-//                    $path = $this->saveFile($file, 'orders');
-//                    OrderImage::query()
-//                        ->create([
-//                            'order_id' => $order->id,
-//                            'image' => $path
-//                        ]);
-//                }
-//            }
-
-            if (array_key_exists('items', $inputs)) {
-                $inputItems = $inputs['items'];
-                $toAttach = [];
-                foreach ($inputItems as $inputItem) {
-                    $toAttach[$inputItem['id']] = [
-                        'weight' => $inputItem['weight']
-                    ];
-                }
-                if ($toAttach) {
-                    $order->items()->attach($toAttach);
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                foreach ($files as $file) {
+                    $path = $this->saveFile($file, 'orders');
+                    OrderImage::query()
+                        ->create([
+                            'order_id' => $order->id,
+                            'image' => $path
+                        ]);
                 }
             }
+
+//            if (array_key_exists('items', $inputs)) {
+//                $inputItems = $inputs['items'];
+//                $toAttach = [];
+//                foreach ($inputItems as $inputItem) {
+//                    $toAttach[$inputItem['id']] = [
+//                        'weight' => $inputItem['weight']
+//                    ];
+//                }
+//                if ($toAttach) {
+//                    $order->items()->attach($toAttach);
+//                }
+//            }
 
             DB::commit();
             event(new OrderWasCreated($order));
