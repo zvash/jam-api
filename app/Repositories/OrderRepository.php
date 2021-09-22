@@ -37,8 +37,8 @@ class OrderRepository extends BaseRepository
     {
         $user = $request->user();
         $inputs = $request->validated();
-        DB::beginTransaction();
-        try {
+//        DB::beginTransaction();
+//        try {
             $inputs['user_id'] = $user->id;
             $inputs['status'] = OrderStatus::PENDING;
 
@@ -66,18 +66,18 @@ class OrderRepository extends BaseRepository
                 }
             }
 
-//            if (array_key_exists('items', $inputs)) {
-//                $inputItems = $inputs['items'];
-//                $toAttach = [];
-//                foreach ($inputItems as $inputItem) {
-//                    $toAttach[$inputItem['id']] = [
-//                        'weight' => $inputItem['weight']
-//                    ];
-//                }
-//                if ($toAttach) {
-//                    $order->items()->attach($toAttach);
-//                }
-//            }
+            if (array_key_exists('items', $inputs)) {
+                $inputItems = $inputs['items'];
+                $toAttach = [];
+                foreach ($inputItems as $inputItem) {
+                    $toAttach[$inputItem['id']] = [
+                        'weight' => $inputItem['weight']
+                    ];
+                }
+                if ($toAttach) {
+                    $order->items()->attach($toAttach);
+                }
+            }
 
             DB::commit();
             event(new OrderWasCreated($order));
@@ -85,11 +85,11 @@ class OrderRepository extends BaseRepository
                 ->with('images')
                 ->where('id', $order->id)
                 ->first();
-        } catch (\Exception $exception) {
-            DB::rollBack();
+//        } catch (\Exception $exception) {
+//            DB::rollBack();
             //throw new OrderCreationError(__('messages.error.order_creation_error'));
-            throw new OrderCreationError($exception->getMessage());
-        }
+//            throw new OrderCreationError($exception->getMessage());
+//        }
     }
 
     /**
