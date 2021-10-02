@@ -64,7 +64,7 @@ class OrderController extends Controller
     {
         $user = $request->user();
         if ($user->id = $order->user_id) {
-            return $this->success($order->load('images', 'driver'));
+            return $this->success($order->load('images', 'driver', 'statusLogs'));
         }
         throw new ContentWasNotFountException(__('messages.error.content_was_not_found'));
     }
